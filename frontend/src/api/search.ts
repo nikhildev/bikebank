@@ -1,10 +1,12 @@
 import log from '../lib/log';
 
+const bikes = require('../mock-data/bikes');
+
 export async function searchBikeId(bikeId: String) {
   if (bikeId.length) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(`Will Search for ${bikeId}`);
+        resolve(bikes);
       }, 1000);
     })
   } else {
