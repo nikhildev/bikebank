@@ -6,7 +6,7 @@ class SearchPage extends React.Component {
   render() {
     return (
       <main>
-        SearchPage
+        <h2>Search</h2>
         <SearchInputMain />
       </main>
     )

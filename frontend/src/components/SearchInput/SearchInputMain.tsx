@@ -1,8 +1,13 @@
 import * as React from 'react';
 
+import { searchBikeId } from '../../api/search';
+import log from '../../lib/log';
+
 class SearchInputMain extends React.Component {
   handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.currentTarget.value);
+    searchBikeId(event.currentTarget.value).then(res => {
+      log(res);
+    });
   }
 
   render() {
