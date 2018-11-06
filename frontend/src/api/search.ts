@@ -12,7 +12,7 @@ const bikes: Array<Bike> = require('../mock-data/bikes');
 
 export function searchBikeByBin(bikeBin: String): Bike[] {
   if (bikeBin.length) {
-    return bikes.filter((bike) => bike.bin === bikeBin);
+    return bikes.filter((bike) => bike.bin.toLowerCase() === bikeBin.toLocaleLowerCase());
     // return new Promise((resolve, reject): => {
     //   // setTimeout(() => {
     //     return resolve(bikes.filter((bike) => bike.bin === bikeBin));

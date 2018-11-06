@@ -1,18 +1,25 @@
 import * as React from 'react';
 
-// import { searchBikeByBin } from '../../api/search';
-// import log from '../../lib/log';
+import './searchInputMain.scss';
 
-class SearchInputMain extends React.Component {
+interface SearchInputMainProps {
+  onSearchTextChange: Function,
+}
+
+class SearchInputMain extends React.Component<SearchInputMainProps> {
+
+  constructor(props: SearchInputMainProps) {
+    super(props);
+  }
   handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // searchBikeByBin(event.currentTarget.value).then(res => {
-    //   log(res);
-    // });
+    const searchString = event.currentTarget.value.toString();
+    this.props.onSearchTextChange(searchString);
   }
 
   render() {
     return (
       <input
+        id="search-input-main"
         type="text"
         onChange={this.handleSearchTextChange}
       />

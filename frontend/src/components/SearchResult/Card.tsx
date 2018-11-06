@@ -1,16 +1,9 @@
 import * as React from 'react';
-import styledComponents  from 'styled-components';
-import styledComponentsTS  from 'styled-components-ts';
-
 
 export class SearchResultCardProps {
   bikeId: Number;
   bikeName: String;
 };
-
-const MyDiv = styledComponentsTS<{children: string}>(styledComponents.a)`
-  color: red;
-`;
 
 const SearchResultCard = (props: SearchResultCardProps) => {
   return (
@@ -23,7 +16,6 @@ const SearchResultCard = (props: SearchResultCardProps) => {
       borderRadius: 3,
       boxShadow: '1px 1px 2px 2px #eee',
     }}>
-      <MyDiv>sdfdf</MyDiv>
       {props.bikeId}{props.bikeName}
     </div>
   )

@@ -20,11 +20,17 @@ class SearchPage extends React.Component<{}, SearchPageState> {
   }
 
   componentDidMount = () => {
-    const bikes = searchBikeByBin('A1');
+  }
+
+  searchBike = (bin: string) => {
+    const bikes = searchBikeByBin(bin);
     this.setState({
       bikes,
     });
-    console.log(this.state);
+  }
+
+  handleSearchInputChange = (bin: string) => {
+    this.searchBike(bin);
   }
   
   render() {
@@ -35,9 +41,12 @@ class SearchPage extends React.Component<{}, SearchPageState> {
         padding: 16,
       }}>
         <h2>Search</h2>
-        <SearchInputMain />
+        <SearchInputMain onSearchTextChange={this.handleSearchInputChange} />
         {this.state.bikes.map(bike =>
-          <SearchResultCard bikeId={bike.id} bikeName={bike.name} />
+          <SearchResultCard
+            key={bike.id}
+            bikeId={bike.id}
+            bikeName={bike.name} />
         )}
       </main>
     )
