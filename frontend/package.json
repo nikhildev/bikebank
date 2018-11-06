@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/styled-components": "^4.0.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "3.1.0",
+    "styled-components": "^4.0.3",
+    "styled-components-ts": "0.0.14"
   },
   "scripts": {
     "start": "react-scripts-ts start",

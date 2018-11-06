@@ -1,16 +1,25 @@
 import log from '../lib/log';
 
-const bikes = require('../mock-data/bikes');
+export class Bike {
+  constructor (
+    public id: number,
+    public bin: string,
+    public name: string,
+  ) {}
+}
 
-export async function searchBikeId(bikeId: String) {
-  if (bikeId.length) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(bikes);
-      }, 1000);
-    })
+const bikes: Array<Bike> = require('../mock-data/bikes');
+
+export function searchBikeByBin(bikeBin: String): Bike[] {
+  if (bikeBin.length) {
+    return bikes.filter((bike) => bike.bin === bikeBin);
+    // return new Promise((resolve, reject): => {
+    //   // setTimeout(() => {
+    //     return resolve(bikes.filter((bike) => bike.bin === bikeBin));
+    //   // }, 1000);
+    // })
   } else {
     log('Empty search string');
-    return {};
+    return [];
   }
 }

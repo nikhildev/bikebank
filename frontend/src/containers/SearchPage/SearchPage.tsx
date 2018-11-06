@@ -1,9 +1,32 @@
 import * as React from 'react';
 
-import SearchInputMain from "../../components/SearchInput/SearchInputMain";
+import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
 
-class SearchPage extends React.Component {
+import { searchBikeByBin } from '../../api/search';
+import { Bike } from '../../api/search';
+
+interface SearchPageState {
+  bikes: Bike[],
+}
+
+class SearchPage extends React.Component<{}, SearchPageState> {
+  constructor(props: any) {
+    super(props);
+    
+    this.state = {
+      bikes: [],
+    };
+  }
+
+  componentDidMount = () => {
+    const bikes = searchBikeByBin('A1');
+    this.setState({
+      bikes,
+    });
+    console.log(this.state);
+  }
+  
   render() {
     return (
       <main style={{
@@ -13,7 +36,9 @@ class SearchPage extends React.Component {
       }}>
         <h2>Search</h2>
         <SearchInputMain />
-        <SearchResultCard bikeId={23} bikeName={'skldjfl'} />
+        {this.state.bikes.map(bike =>
+          <SearchResultCard bikeId={bike.id} bikeName={bike.name} />
+        )}
       </main>
     )
   }
