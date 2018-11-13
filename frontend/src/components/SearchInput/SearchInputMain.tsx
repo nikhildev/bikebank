@@ -3,7 +3,7 @@ import * as React from 'react';
 import './searchInputMain.scss';
 
 interface ISearchInputMainProps {
-  onSearchTextChange: () => void,
+  onSearchTextChange: (searchString: string) => void,
 }
 
 class SearchInputMain extends React.Component<ISearchInputMainProps> {

@@ -42,6 +42,7 @@ export default function register() {
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
+        // tslint:disable-next-line
         navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service ' +
@@ -97,7 +98,9 @@ function checkValidServiceWorker(swUrl: string) {
         response.headers.get('content-type')!.indexOf('javascript') === -1
       ) {
         // No service worker found. Probably a different app. Reload the page.
+        // tslint:disable-next-line
         navigator.serviceWorker.ready.then(registration => {
+          // tslint:disable-next-line
           registration.unregister().then(() => {
             window.location.reload();
           });
@@ -116,7 +119,9 @@ function checkValidServiceWorker(swUrl: string) {
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
+    // tslint:disable-next-line
     navigator.serviceWorker.ready.then(registration => {
+      // tslint:disable-next-line
       registration.unregister();
     });
   }
