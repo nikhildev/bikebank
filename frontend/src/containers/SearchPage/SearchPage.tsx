@@ -3,14 +3,13 @@ import * as React from 'react';
 import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
 
-import { searchBikeByBin } from '../../api/search';
-import { Bike } from '../../api/search';
+import { Bike, searchBikeByBin } from '../../api/search';
 
-interface SearchPageState {
+interface ISearchPageState {
   bikes: Bike[];
 }
 
-class SearchPage extends React.Component<{}, SearchPageState> {
+class SearchPage extends React.Component<{}, ISearchPageState> {
   constructor(props: any) {
     super(props);
 
@@ -19,20 +18,18 @@ class SearchPage extends React.Component<{}, SearchPageState> {
     };
   }
 
-  componentDidMount = () => {};
-
-  searchBike = (bin: string) => {
+  public searchBike = (bin: string) => {
     const bikes = searchBikeByBin(bin);
     this.setState({
       bikes,
     });
   };
 
-  handleSearchInputChange = (bin: string) => {
+  public handleSearchInputChange = (bin: string) => {
     this.searchBike(bin);
   };
 
-  render() {
+  public render() {
     return (
       <main
         style={{

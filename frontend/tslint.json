@@ -1,9 +1,9 @@
 {
   "extends": [
-    // "tslint:recommended",
-    // "tslint-react",
-    // "tslint-config-standard",
-    // "tslint-config-prettier"
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-standard",
+    "tslint-config-prettier"
   ],
   "defaultSeverity": "warning",
   "linterOptions": {
@@ -14,6 +14,11 @@
     ]
   },
   "jsRules": {
-    "no-empty": true
+    "no-empty": true,
+    "max-line-length": {
+        "options": [100]
+    },
+    "triple-equals": true,
+    "quotemark": [true, "single"]
   }
 }
