@@ -28,7 +28,12 @@ class AppToolbar extends React.Component<IProps> {
           <Link to="/">Dashboard</Link>
         </nav>
         <div id="ToolbarActions">
-          Actions
+          <Link
+            id="AppToolbarLoginButton"
+            to="/"
+          >
+            Login
+          </Link>
         </div>
       </div>
     )
