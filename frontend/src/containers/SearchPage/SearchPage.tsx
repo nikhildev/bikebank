@@ -7,49 +7,51 @@ import { searchBikeByBin } from '../../api/search';
 import { Bike } from '../../api/search';
 
 interface SearchPageState {
-  bikes: Bike[],
+  bikes: Bike[];
 }
 
 class SearchPage extends React.Component<{}, SearchPageState> {
   constructor(props: any) {
     super(props);
-    
+
     this.state = {
       bikes: [],
     };
   }
 
-  componentDidMount = () => {
-  }
+  componentDidMount = () => {};
 
   searchBike = (bin: string) => {
     const bikes = searchBikeByBin(bin);
     this.setState({
       bikes,
     });
-  }
+  };
 
   handleSearchInputChange = (bin: string) => {
     this.searchBike(bin);
-  }
-  
+  };
+
   render() {
     return (
-      <main style={{
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 16,
-      }}>
+      <main
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: 16,
+        }}
+      >
         <h2>Search</h2>
         <SearchInputMain onSearchTextChange={this.handleSearchInputChange} />
-        {this.state.bikes.map(bike =>
+        {this.state.bikes.map(bike => (
           <SearchResultCard
             key={bike.id}
             bikeId={bike.id}
-            bikeName={bike.name} />
-        )}
+            bikeName={bike.name}
+          />
+        ))}
       </main>
-    )
+    );
   }
 }
 
