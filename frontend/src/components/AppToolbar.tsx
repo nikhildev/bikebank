@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-interface IAppToolbarProps {
+interface IProps {
   appTitle: string,
 }
 
-class AppToolbar extends React.Component<IAppToolbarProps> {
+class AppToolbar extends React.Component<IProps> {
   public render() {
     return (
       <div>

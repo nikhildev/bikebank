@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-export class SearchResultCardProps {
+export class IProps {
   public bikeId: number;
   public bikeName: string;
 };
 
-const SearchResultCard = (props: SearchResultCardProps) => {
+const SearchResultCard = (props: IProps) => {
   return (
     <div style={{
       backgroundColor: '#eee',

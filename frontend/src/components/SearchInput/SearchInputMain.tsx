@@ -2,13 +2,13 @@ import * as React from 'react';
 
 import './searchInputMain.scss';
 
-interface ISearchInputMainProps {
+interface IProps {
   onSearchTextChange: (searchString: string) => void,
 }
 
-class SearchInputMain extends React.Component<ISearchInputMainProps> {
+class SearchInputMain extends React.Component<IProps> {
 
-  constructor(props: ISearchInputMainProps) {
+  constructor(props: IProps) {
     super(props);
   }
   public handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {

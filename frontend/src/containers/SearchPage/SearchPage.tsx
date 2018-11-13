@@ -5,11 +5,11 @@ import SearchResultCard from '../../components/SearchResult/Card';
 
 import { Bike, searchBikeByBin } from '../../api/search';
 
-interface ISearchPageState {
+interface IState {
   bikes: Bike[];
 }
 
-class SearchPage extends React.Component<{}, ISearchPageState> {
+class SearchPage extends React.Component<{}, IState> {
   constructor(props: any) {
     super(props);
 
