@@ -1,26 +1,30 @@
-import log from '../lib/log';
-import mockBikes from '../mock-data/bikes';
+import {default as axios} from 'axios';
 
-export class Bike {
-  constructor (
-    public id: number,
-    public bin: string,
-    public name: string,
-  ) {}
-}
+import { transformRestData } from '../lib/firebase';
+// import { Bike } from '../types/bike';
 
-const bikes: Bike[] = mockBikes;
+const API_BASE_URL = 'https://firestore.googleapis.com/v1beta1/projects/bike-bank/databases/(default)/documents';
 
-export function searchBikeByBin(bikeBin: string): Bike[] {
+// export class Bike {
+//   constructor (
+//     public id: number,
+//     public bin: string,
+//     public name: string,
+//   ) {}
+// }
+
+// const bikes: Bike[] = mockBikes;
+
+export function searchBikeByBin(bikeBin: string): Promise<any> {
   if (bikeBin.length) {
-    return bikes.filter((bike) => bike.bin.toLowerCase() === bikeBin.toLocaleLowerCase());
-    // return new Promise((resolve, reject): => {
-    //   // setTimeout(() => {
-    //     return resolve(bikes.filter((bike) => bike.bin === bikeBin));
-    //   // }, 1000);
-    // })
+    return axios.get(`${API_BASE_URL}/Bikes`)
+      .then(res => transformRestData(res))
+      .then(res => {
+        return {
+          ...res,
+        }
+      })
   } else {
-    log('Empty search string');
-    return [];
+    return Promise.reject([]);
   }
 }

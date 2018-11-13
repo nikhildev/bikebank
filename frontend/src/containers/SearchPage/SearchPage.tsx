@@ -3,7 +3,8 @@ import * as React from 'react';
 import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
 
-import { Bike, searchBikeByBin } from '../../api/search';
+import { searchBikeByBin } from '../../api/search';
+import { Bike } from '../../types/bike';
 
 interface IState {
   bikes: Bike[];
@@ -18,11 +19,15 @@ class SearchPage extends React.Component<{}, IState> {
     };
   }
 
-  public searchBike = (bin: string) => {
-    const bikes = searchBikeByBin(bin);
-    this.setState({
-      bikes,
-    });
+  public searchBike = (bikeId: string) => {
+    searchBikeByBin(bikeId)
+      .then(res => {
+        console.log(res);
+        
+        this.setState({
+          bikes: res.data,
+        });
+      })
   };
 
   public handleSearchInputChange = (bin: string) => {

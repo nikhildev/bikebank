@@ -1,4 +1,4 @@
-import { Bike } from '../api/search';
+import { Bike } from '../types/bike';
 
 const mockBikes: Bike[] = [
   {
