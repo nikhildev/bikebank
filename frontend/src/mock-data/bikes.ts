@@ -1,32 +1,36 @@
-export default [
+import { Bike } from '../api/search';
+
+const mockBikes: Bike[] = [
   {
-    id: 1,
     bin: 'A1',
+    id: 1,
     name: 'ABC',
   },
   {
-    id: 2,
     bin: 'A2',
+    id: 2,
     name: 'XYZ',
   },
   {
-    id: 3,
     bin: 'A3',
+    id: 3,
     name: 'HHH',
   },
   {
-    id: 4,
     bin: 'A4',
+    id: 4,
     name: 'LMN',
   },
   {
-    id: 5,
     bin: 'A5',
+    id: 5,
     name: 'PWR',
   },
   {
-    id: 6,
     bin: 'A6',
+    id: 6,
     name: 'SAT',
   },
 ];
+
+export default mockBikes;

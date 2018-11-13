@@ -1,5 +1,5 @@
 import log from '../lib/log';
-import * as mockBikes from '../mock-data/bikes';
+import mockBikes from '../mock-data/bikes';
 
 export class Bike {
   constructor (

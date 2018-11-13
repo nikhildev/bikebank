@@ -9,7 +9,8 @@
         }
       ],
       "prettier/prettier": "error",
-      "max-len": ["error", 80]
+      "max-len": ["error", 80],
+      "linebreak-style": "off"
     },
     "env": {
       "browser": true
