@@ -1,0 +1,36 @@
+#AppToolbar {
+  background-color: #00c0d4;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#AppToolbar a {
+  text-decoration: none;
+  color: white;
+}
+
+#AppTitle {
+  font-family: 'Lobster', cursive;
+  color: white;
+  font-size: 2rem;
+}
+
+#AppNavBar {
+  padding: 0 2rem;
+  flex: 1;
+}
+
+#AppNavBar a {
+  margin: 1rem;
+  padding: 1rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+#AppNavBar a.active {
+  background-color: #00acbf;
+  border-radius: 8px;
+  font-weight: 600;
+}
