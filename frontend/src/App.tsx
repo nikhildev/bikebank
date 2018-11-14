@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 
 import AppToolbar from './components/AppToolbar/AppToolbar';
-import SearchPage from "./containers/SearchPage/SearchPage";
+import RegisterBikePage from './containers/RegisterBikePage/RegisterBikePage';
+import SearchPage from './containers/SearchPage/SearchPage';
 
 class App extends React.Component {
   public render() {
@@ -15,6 +16,7 @@ class App extends React.Component {
             appTitle={'Bike Bank'}
           />
           <SearchPage />
+          <RegisterBikePage />
         </div>
       </BrowserRouter>
     );

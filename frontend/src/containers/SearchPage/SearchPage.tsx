@@ -55,6 +55,7 @@ class SearchPage extends React.Component<{}, IState> {
             key={bike.id}
             id={bike.id}
             serial={bike.serial}
+            status={bike.status}
           />
         ))}
       </main>
