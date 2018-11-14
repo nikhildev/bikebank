@@ -52,9 +52,9 @@ class SearchPage extends React.Component<{}, IState> {
         <SearchInputMain onSearchTextChange={this.handleSearchInputChange} />
         {this.state.bikes.map(bike => (
           <SearchResultCard
-            key={bike.bikeId}
-            bikeId={bike.bikeId}
-            bikeName={bike.name}
+            key={bike.id}
+            id={bike.id}
+            serial={bike.serial}
           />
         ))}
       </main>

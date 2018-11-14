@@ -1,11 +1,8 @@
 import * as React from 'react';
 
-export class IProps {
-  public bikeId: number;
-  public bikeName: string;
-};
+import { Bike } from '../../types/bike';
 
-const SearchResultCard = (props: IProps) => {
+const SearchResultCard = (props: Bike) => {
   return (
     <div style={{
       backgroundColor: '#eee',
@@ -16,7 +13,7 @@ const SearchResultCard = (props: IProps) => {
       padding: 16,
       width: 64,
     }}>
-      {props.bikeId}{props.bikeName}
+      {props.id}{props.serial}
     </div>
   )
 }
