@@ -1,27 +1,15 @@
+export interface IFirebaseDocument {
+  fields: any;
+}
+
 function transformFields(fields: object) {
   const data = {};
-  console.log(fields);
-  
-  for (const field in Object.keys(fields)) {
-    
-    if (fields.hasOwnProperty(field)) {
-      console.log(field);
 
-      switch (field) {
-        case 'booleanValue':
-          data[field] = fields[field].booleanValue;
-          break;
-        case 'stringValue':
-          data[field] = fields[field].stringValue;
-          break;
-        case 'integerValue':
-          data[field] = fields[field].integerValue;
-          break;
-      }
-    }
-  }
-  console.log(data);
-  
+  Object.keys(fields).map(field => {
+    // tslint:disable-next-line:no-string-literal
+    data[field] = Object['values'](fields[field])[0];
+  });
+
   return data;
 }
 
@@ -30,8 +18,8 @@ export const transformRestData = (response: any) => {
 
   if (response.data.documents) {
     data = [];
-    response.data.documents.forEach((document: object) => {
-      const newDoc = transformFields(document['fields']);
+    response.data.documents.forEach((document: IFirebaseDocument) => {
+      const newDoc = transformFields(document.fields);
       data.push(newDoc);
     });
   } else {

@@ -8,6 +8,7 @@ import { Bike } from '../../types/bike';
 
 interface IState {
   bikes: Bike[];
+  error: any;
 }
 
 class SearchPage extends React.Component<{}, IState> {
@@ -16,18 +17,22 @@ class SearchPage extends React.Component<{}, IState> {
 
     this.state = {
       bikes: [],
+      error: null,
     };
   }
 
   public searchBike = (bikeId: string) => {
     searchBikeByBin(bikeId)
       .then(res => {
-        console.log(res);
-        
         this.setState({
           bikes: res.data,
         });
       })
+      .catch(err => {
+        this.setState({
+          error: err,
+        });
+      });
   };
 
   public handleSearchInputChange = (bin: string) => {
@@ -47,8 +52,8 @@ class SearchPage extends React.Component<{}, IState> {
         <SearchInputMain onSearchTextChange={this.handleSearchInputChange} />
         {this.state.bikes.map(bike => (
           <SearchResultCard
-            key={bike.id}
-            bikeId={bike.id}
+            key={bike.bikeId}
+            bikeId={bike.bikeId}
             bikeName={bike.name}
           />
         ))}

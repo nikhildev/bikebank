@@ -1,7 +1,6 @@
 export class Bike {
   constructor (
-    public id: number,
-    public bin: string,
+    public bikeId: number,
     public name: string,
   ) {}
 }
