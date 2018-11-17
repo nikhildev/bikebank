@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './AppToolbar.css';
+import { FirebaseAuth } from '../../lib/firebase';
 
 interface IProps {
   appTitle: string,
@@ -23,9 +24,17 @@ class AppToolbar extends React.Component<IProps> {
         </nav>
         <div id="ToolbarActions">
           <NavLink id="AppToolbarLoginButton" to="/login">Login</NavLink>
+          <button onClick={this.handleLogin} />
         </div>
       </div>
     )
+  }
+
+  private handleLogin = () => {
+    const firebaseAuth = new FirebaseAuth();
+    firebaseAuth.signinWithGoogle().then((user: any) => {
+      console.log(user);
+    });
   }
 }
 

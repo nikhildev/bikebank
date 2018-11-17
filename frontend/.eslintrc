@@ -10,7 +10,10 @@
       ],
       "prettier/prettier": "error",
       "max-len": ["error", 80],
-      "linebreak-style": "off"
+      "linebreak-style": "off",
+      "object-literal-sort-keys": false,
+      "sort-imports": false,
+      "no-console": "off"
     },
     "env": {
       "browser": true
