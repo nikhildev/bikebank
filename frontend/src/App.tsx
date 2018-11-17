@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
 import AppToolbar from './components/AppToolbar/AppToolbar';
-import RegisterBikePage from './containers/RegisterBikePage/RegisterBikePage';
-import SearchPage from './containers/SearchPage/SearchPage';
+import RegisterBikePage from './pages/RegisterBikePage/RegisterBikePage';
+import SearchPage from './pages/SearchPage/SearchPage';
 
 class App extends React.Component {
   public render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <AppToolbar
-            appTitle={'Bike Bank'}
-          />
-          <SearchPage />
-          <RegisterBikePage />
-        </div>
-      </BrowserRouter>
+      <div className="App">
+        <AppToolbar
+          appTitle={'Bike Bank'}
+        />
+        <Switch>
+          <Route path="/search" component={SearchPage} />
+          <Route path="/register" component={RegisterBikePage} />
+        </Switch>
+      </div>
     );
   }
 }
