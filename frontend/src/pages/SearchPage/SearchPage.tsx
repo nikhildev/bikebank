@@ -35,7 +35,7 @@ class SearchPage extends React.Component<{}, IState> {
       });
   };
 
-  public handleSearchInputChange = (bin: string) => {
+  public handleSearchSubmit = (bin: string) => {
     this.searchBike(bin);
   };
 
@@ -49,7 +49,7 @@ class SearchPage extends React.Component<{}, IState> {
         }}
       >
         <h2>Search</h2>
-        <SearchInputMain onSearchTextChange={this.handleSearchInputChange} />
+        <SearchInputMain onSearch={this.handleSearchSubmit} />
         {this.state.bikes.map(bike => (
           <SearchResultCard
             key={bike.id}
