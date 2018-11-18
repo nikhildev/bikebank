@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 
 import { User } from '../types/user';
-import { setLoginSuccess } from '../actions/index';
+import { setLoginSuccess, setLogoutSuccess } from '../actions/index';
 
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',
@@ -34,6 +34,12 @@ export class FirebaseAuth {
         setLoginSuccess(user);
         return user;
       });
+  }
+
+  public signout(): void {
+    firebase.auth().signOut().then(res => {
+      setLogoutSuccess();
+    })
   }
 }
 export interface IFirebaseDocument {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { setLoginSuccess } from '../actions/index';
+import { setLoginSuccess, setLogoutSuccess } from '../actions/index';
 import { FirebaseAuth } from '../lib/firebase';
 import { User } from '../types/user';
 
@@ -13,6 +13,7 @@ interface IState {
 interface IProps {
   user: any;
   setLoginSuccess: Function;
+  setLogoutSuccess: Function;
 }
 
 class Protected extends React.Component<IProps, IState> {
@@ -24,7 +25,7 @@ class Protected extends React.Component<IProps, IState> {
 
   private triggerLogin() {
     this.firebaseAuth.signinWithGoogle().then((user: User) => {
-      this.props.setLoginSuccess(user);
+      // this.props.setLoginSuccess(user);
     });
   }
 
@@ -49,6 +50,7 @@ function mapStateToProps(state: IState) {
 function mapDispatchToProps(dispatch: any) {
   return bindActionCreators({
     setLoginSuccess,
+    setLogoutSuccess,
   }, dispatch);
 }
 
