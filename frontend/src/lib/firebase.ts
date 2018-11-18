@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 
 import { User } from '../types/user';
+import { setLoginSuccess } from '../actions/index';
 
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',
@@ -21,11 +22,17 @@ export class FirebaseAuth {
     this.provider = new firebase.auth.GoogleAuthProvider();
   }
 
-  public signinWithGoogle() {
+  public async signinWithGoogle(): Promise<User> {
     return firebase.auth().signInWithPopup(this.provider)
       .then(res => {
-        console.log(res.credential);
-        return res.user;
+        const user: User  = {
+          uid: res.user && res.user.uid,
+          displayName: res.user && res.user.displayName,
+          email: res.user && res.user.email,
+          photoUrl: res.user && res.user.photoURL,
+        }
+        setLoginSuccess(user);
+        return user;
       });
   }
 }

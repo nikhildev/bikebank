@@ -1,10 +1,8 @@
 export class User {
   constructor (
-    public uid: string,
-    public displayName: string,
-    public email: string,
-    public accessToken: string,
-    public photoUrl?: string,
-    public refreshToken?: string,
+    public uid: string | null,
+    public displayName: string | null,
+    public email: string | null,
+    public photoUrl?: string | null,
   ) {}
 }

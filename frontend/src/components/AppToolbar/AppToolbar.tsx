@@ -1,19 +1,28 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import './AppToolbar.css';
-import { FirebaseAuth } from '../../lib/firebase';
+import { User } from '../../types/user';
 
 interface IProps {
   appTitle: string,
+  user: User | boolean;
 }
 
-class AppToolbar extends React.Component<IProps> {
+interface IState {
+  user: User | false;
+}
+
+class AppToolbar extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
   }
 
   public render() {
+    console.log(this.props);
+
     return (
       <div id="AppToolbar">
         <div id="AppTitle">{this.props.appTitle}</div>
@@ -23,19 +32,32 @@ class AppToolbar extends React.Component<IProps> {
           <NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink>
         </nav>
         <div id="ToolbarActions">
-          <NavLink id="AppToolbarLoginButton" to="/login">Login</NavLink>
-          <button onClick={this.handleLogin} />
+          {this.props.user
+            ? <button>Logout</button>
+            : <button>Login</button>
+          }
+          {/* <NavLink id="AppToolbarLoginButton" to="/login">Login</NavLink> */}
+          {/* <button onClick={this.handleLogin} /> */}
         </div>
       </div>
     )
   }
 
-  private handleLogin = () => {
-    const firebaseAuth = new FirebaseAuth();
-    firebaseAuth.signinWithGoogle().then((user: any) => {
-      console.log(user);
-    });
-  }
+  // private handleLogin = () => {
+  //   console.log(3);
+  // }
 }
 
-export default AppToolbar;
+function mapStateToProps(state: IState): IState {
+  return {
+    user: state.user || false,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return bindActionCreators({
+    // setLoginSuccess,
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (AppToolbar);
