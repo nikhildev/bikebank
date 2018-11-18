@@ -14,34 +14,32 @@ const config = {
 
 firebase.initializeApp(config);
 
-export class FirebaseAuth {
-  public user: User;
-  private provider?: any;
+const provider = new firebase.auth.GoogleAuthProvider();
 
-  constructor() {
-    this.provider = new firebase.auth.GoogleAuthProvider();
-  }
-
-  public async signinWithGoogle(): Promise<User> {
-    return firebase.auth().signInWithPopup(this.provider)
-      .then(res => {
-        const user: User  = {
-          uid: res.user && res.user.uid,
-          displayName: res.user && res.user.displayName,
-          email: res.user && res.user.email,
-          photoUrl: res.user && res.user.photoURL,
-        }
-        setLoginSuccess(user);
-        return user;
-      });
-  }
-
-  public signout(): void {
-    firebase.auth().signOut().then(res => {
-      setLogoutSuccess();
-    })
-  }
+export const login = async (): Promise<User> => {
+  return firebase.auth().signInWithPopup(provider)
+    .then(res => {
+      const user: User  = {
+        uid: res.user && res.user.uid,
+        displayName: res.user && res.user.displayName,
+        email: res.user && res.user.email,
+        photoUrl: res.user && res.user.photoURL,
+      }
+      setLoginSuccess(user);
+      return user;
+    });
 }
+
+export const logout = async (): Promise<any> => {
+  console.log('gone');
+
+  firebase.auth().signOut().then(res => {
+    console.log(res);
+
+    setLogoutSuccess();
+  })
+}
+
 export interface IFirebaseDocument {
   fields: any;
 }

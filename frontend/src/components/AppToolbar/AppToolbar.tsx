@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import './AppToolbar.css';
 import { User } from '../../types/user';
+import { login, logout } from '../../lib/firebase';
 
 interface IProps {
   appTitle: string,
@@ -33,19 +33,13 @@ class AppToolbar extends React.Component<IProps, IState> {
         </nav>
         <div id="ToolbarActions">
           {this.props.user
-            ? <button>Logout</button>
-            : <button>Login</button>
+            ? <button onClick={logout}>Logout</button>
+            : <button onClick={login}>Login</button>
           }
-          {/* <NavLink id="AppToolbarLoginButton" to="/login">Login</NavLink> */}
-          {/* <button onClick={this.handleLogin} /> */}
         </div>
       </div>
     )
   }
-
-  // private handleLogin = () => {
-  //   console.log(3);
-  // }
 }
 
 function mapStateToProps(state: IState): IState {
@@ -54,10 +48,4 @@ function mapStateToProps(state: IState): IState {
   };
 }
 
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({
-    // setLoginSuccess,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (AppToolbar);
+export default connect(mapStateToProps, null) (AppToolbar);

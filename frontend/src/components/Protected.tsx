@@ -2,9 +2,9 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { setLoginSuccess, setLogoutSuccess } from '../actions/index';
-import { FirebaseAuth } from '../lib/firebase';
+import { login } from '../lib/firebase';
 import { User } from '../types/user';
+import * as signinImage from '../assets/images/signin_with_google.png';
 
 interface IState {
   user: User | boolean;
@@ -12,21 +12,11 @@ interface IState {
 
 interface IProps {
   user: any;
-  setLoginSuccess: Function;
-  setLogoutSuccess: Function;
 }
 
 class Protected extends React.Component<IProps, IState> {
-  firebaseAuth = new FirebaseAuth();
-
   constructor(props: IProps) {
     super(props);
-  }
-
-  private triggerLogin() {
-    this.firebaseAuth.signinWithGoogle().then((user: User) => {
-      // this.props.setLoginSuccess(user);
-    });
   }
 
   public render() {
@@ -35,8 +25,18 @@ class Protected extends React.Component<IProps, IState> {
         <main>{this.props.children}</main>
       )
     } else {
-      this.triggerLogin();
-      return (<main><h1>Not Authenticated</h1></main>)
+      return (
+        <main style={{
+          textAlign: "center",
+        }}>
+          <h1>You need to login to access your dashboard</h1>
+          <img
+            src={signinImage}
+            alt=""
+            onClick={login}
+          />
+        </main>
+      )
     }
   }
 }
@@ -49,8 +49,6 @@ function mapStateToProps(state: IState) {
 
 function mapDispatchToProps(dispatch: any) {
   return bindActionCreators({
-    setLoginSuccess,
-    setLogoutSuccess,
   }, dispatch);
 }
 
