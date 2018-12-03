@@ -13,9 +13,9 @@ export class Bike {
   ) {}
 }
 
-export const BIKE_STATUS = {
-  IN_POSSESSION: 1,
-  SOLD: 3,
-  STOLEN: 2,
-  UNREGISTERED: 0,
+export enum BIKE_STATUS {
+  UNREGISTERED,
+  IN_POSSESSION,
+  STOLEN,
+  SOLD,
 };
