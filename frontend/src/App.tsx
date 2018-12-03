@@ -18,12 +18,8 @@ class App extends React.Component {
         />
         <Switch>
           <Route path="/search" component={SearchPage} />
-          <Route path="/register" component={RegisterBikePage} />
-          <Route path="/dashboard">
-            <Protected>
-              <DashboardPage />
-            </Protected>
-          </Route>
+          <Route path="/dashboard"><Protected><RegisterBikePage /></Protected></Route>
+          <Route path="/dashboard"><Protected><DashboardPage /></Protected></Route>
         </Switch>
       </div>
     );

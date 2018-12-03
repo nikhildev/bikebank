@@ -21,8 +21,6 @@ class AppToolbar extends React.Component<IProps, IState> {
   }
 
   public render() {
-    console.log(this.props);
-
     return (
       <div id="AppToolbar">
         <div id="AppTitle">{this.props.appTitle}</div>
