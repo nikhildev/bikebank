@@ -26,9 +26,21 @@ export const login = async (): Promise<User> => {
         photoUrl: res.user && res.user.photoURL,
       }
       setLoginSuccess(user);
+
+      if (window.localStorage) {
+        window.localStorage.setItem('bikebankUser', JSON.stringify(user));
+      }
       return user;
     });
 }
+
+export function getLoggedInUser(): User | null {
+  if (window.localStorage && window.localStorage.getItem('bikebankUser')) {
+    return JSON.parse(window.localStorage.getItem('bikebankUser') || '');
+  } else {
+    return null
+  }
+};
 
 export const logout = async (): Promise<any> => {
   console.log('gone');

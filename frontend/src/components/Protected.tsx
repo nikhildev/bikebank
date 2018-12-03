@@ -33,6 +33,7 @@ class Protected extends React.Component<IProps, IState> {
           <img
             src={signinImage}
             alt=""
+            height="52"
             onClick={login}
           />
         </main>

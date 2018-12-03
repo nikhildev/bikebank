@@ -1,17 +1,18 @@
 import { IReduxAction, ReduxActionTypes } from '../types/redux';
 import { User } from '../types/user';
+import{ getLoggedInUser } from '../lib/firebase';
 
 export default function (
-  state: User | boolean = false,
+  state: User | null = getLoggedInUser(),
   action: IReduxAction,
-  ) : User | boolean {
+  ) : User | null {
 
   switch (action.type) {
     case ReduxActionTypes.AUTHENTICATED:
       return action.payload;
       break;
     case ReduxActionTypes.UNAUTHENTICATED:
-      return false;
+      return null;
       break
     default:
       return state;
