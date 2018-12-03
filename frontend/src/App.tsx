@@ -7,6 +7,7 @@ import AppToolbar from './components/AppToolbar/AppToolbar';
 import RegisterBikePage from './pages/RegisterBikePage/RegisterBikePage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import DashboardPage from './pages/Dashboard/Dashboard';
+import LoginPage from './pages/LoginPage/LoginPage';
 import Protected from './components/Protected';
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
         />
         <Switch>
           <Route path="/search" component={SearchPage} />
+          <Route path="/login" component={LoginPage} />
           <Route path="/dashboard"><Protected><RegisterBikePage /></Protected></Route>
           <Route path="/dashboard"><Protected><DashboardPage /></Protected></Route>
         </Switch>
