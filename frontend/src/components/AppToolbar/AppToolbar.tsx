@@ -24,8 +24,8 @@ interface IState {
   user: User;
 }
 
-class AppToolbar extends React.Component<IProps & IDispatchProps> {
-  constructor(props: IProps & IDispatchProps) {
+class AppToolbar extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props);
   }
 
@@ -50,8 +50,7 @@ class AppToolbar extends React.Component<IProps & IDispatchProps> {
           {this.props.user
             ? <div onClick={this.handleLogoutClick}>
                 <Avatar
-                  photoUrl={this.props.user.photoUrl}
-                  displayName={this.props.user.displayName}
+                  user={this.props.user}
                 />
               </div>
             : <button onClick={this.handleLoginClick}>Login</button>

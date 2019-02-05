@@ -1,25 +1,40 @@
 import * as React from 'react';
+import { User } from '../../types/user';
 
 interface IProps {
-  photoUrl: string | null | undefined,
-  displayName?: string | null | undefined,
+  user: User,
 }
 
 const Avatar: React.FunctionComponent<IProps> = (props) => {
-  const photoUrl: string = props.photoUrl || '';
-  const displayName: string = props.displayName || '';
+  console.log(props);
+  
+  const photoUrl: string = props.user.photoUrl || '';
+  const displayName: string = props.user.displayName || '';
 
-  return <React.Fragment>
-    <img
+  return (
+    <div
+      className="avatar-md"
       style={{
-        height: 32,
-        width: 32,
-      }}
-      src={photoUrl}
-      alt={photoUrl} />
-    <label>{displayName}</label>
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+      <img
+        style={{
+          height: 32,
+          width: 32,
+          borderRadius: '50%',
+        }}
+        src={photoUrl}
+        alt={photoUrl} />
+      <label style={{
+        fontSize: 13,
+        fontWeight: 600,
+        color: 'white',
+        marginLeft: 8,
+      }}>{displayName}</label>
+    </div>
+  )
 
-  </React.Fragment>
 }
 
 export default Avatar;
