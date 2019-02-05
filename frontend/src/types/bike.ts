@@ -19,3 +19,18 @@ export enum BIKE_STATUS {
   STOLEN,
   SOLD,
 };
+
+export const fakeData: Bike[] = [
+  {
+    id: '1',
+    serial: '123',
+    status: 1,
+    ownerId: '111' ,
+    purchaseDate: '111' ,
+    make: 'Scott',
+    model: 'Navajo',
+    color: 'Black',
+    description: 'Very nice bike',
+    accessories: 'Mobile pouch',
+  },
+];

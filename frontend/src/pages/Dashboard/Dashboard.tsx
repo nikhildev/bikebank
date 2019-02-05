@@ -1,28 +1,25 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { User } from '../../types/user';
+import { Bike, fakeData } from '../../types/bike';
 
+// These Will be received through redux store
 interface IState {
-  user: User | boolean;
+  user: User,
   ownProps: any;
   error?: any;
+  myBikes: Bike[],
 }
 
 interface IProps {
-  user: User,
 }
 
-class DashboardPage extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      user: false,
-      ownProps: null,
-      error: null,
-    };
-  }
+class DashboardPage extends React.Component<IProps & IState> {
+  // constructor(props: IProps & IState) {
+  //   super(props);
+  // }
 
   public render() {
     return (
@@ -34,6 +31,21 @@ class DashboardPage extends React.Component<IProps, IState> {
         }}
       >
         <h1>Dashboard - {this.props.user.displayName}</h1>
+        <Link to="dashboard/register">Register a new bike</Link>
+
+        <div>
+          {this.props.myBikes.map(bike => (
+            <div
+              className="bike-card"
+              key={bike.id}
+              >
+              <span>Make: {bike.make}</span>
+              <span>Model: {bike.model}</span>
+              <span>Serial: {bike.serial}</span>
+            </div>
+          ))}
+        </div>
+
       </main>
     );
   }
@@ -45,6 +57,7 @@ function mapStateToProps(state: IState): IState {
   return {
     user: state.user,
     ownProps: state.ownProps,
+    myBikes: fakeData,
   };
 }
 

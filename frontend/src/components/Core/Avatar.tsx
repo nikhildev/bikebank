@@ -6,8 +6,6 @@ interface IProps {
 }
 
 const Avatar: React.FunctionComponent<IProps> = (props) => {
-  console.log(props);
-  
   const photoUrl: string = props.user.photoUrl || '';
   const displayName: string = props.user.displayName || '';
 
