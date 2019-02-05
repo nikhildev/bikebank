@@ -1,8 +1,6 @@
-export class User {
-  constructor (
-    public uid: string | null,
-    public displayName: string | null,
-    public email: string | null,
-    public photoUrl?: string | null,
-  ) {}
+export interface User {
+    uid: string | null,
+    displayName: string | null,
+    email: string | null,
+    photoUrl?: string | null,
 }
