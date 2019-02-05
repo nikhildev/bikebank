@@ -8,11 +8,12 @@ interface IProps {
 const Avatar: React.FunctionComponent<IProps> = (props) => {
   const photoUrl: string = props.photoUrl || '';
   const displayName: string = props.displayName || '';
+
   return <React.Fragment>
     <img
       style={{
-        height: 48,
-        width: 48,
+        height: 32,
+        width: 32,
       }}
       src={photoUrl}
       alt={photoUrl} />

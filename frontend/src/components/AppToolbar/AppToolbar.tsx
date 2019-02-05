@@ -1,6 +1,9 @@
 import * as React from 'react';
+import { Dispatch } from 'redux';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ReduxActionTypes } from '../../types/redux';
+// import { RouteComponentProps } from 'react-router'
 
 import './AppToolbar.css';
 import { User } from '../../types/user';
@@ -12,13 +15,26 @@ interface IProps {
   user: User;
 }
 
+interface IDispatchProps {
+  dispatchLogin: Function,
+  dispatchLogout: Function,
+}
+
 interface IState {
   user: User;
 }
 
-class AppToolbar extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+class AppToolbar extends React.Component<IProps & IDispatchProps> {
+  constructor(props: IProps & IDispatchProps) {
     super(props);
+  }
+
+  private handleLoginClick = async () => {
+    await login();
+  }
+
+  private handleLogoutClick = async () => {
+    await logout();
   }
 
   public render() {
@@ -32,13 +48,13 @@ class AppToolbar extends React.Component<IProps, IState> {
         </nav>
         <div id="ToolbarActions">
           {this.props.user
-            ? <div onClick={logout}>
+            ? <div onClick={this.handleLogoutClick}>
                 <Avatar
                   photoUrl={this.props.user.photoUrl}
                   displayName={this.props.user.displayName}
                 />
               </div>
-            : <button onClick={login}>Login</button>
+            : <button onClick={this.handleLoginClick}>Login</button>
           }
         </div>
       </div>
@@ -52,4 +68,13 @@ function mapStateToProps(state: IState): IState {
   };
 }
 
-export default connect(mapStateToProps, null) (AppToolbar);
+const mapDispatchToProps: any = (dispatch: Dispatch) => ({
+  dispatchLogin: () => dispatch({
+    type: ReduxActionTypes.AUTHENTICATED,
+  }),
+  dispatchLogout: () => dispatch({
+    type: ReduxActionTypes.UNAUTHENTICATED,
+  }),
+});
+
+export default connect<IState, IDispatchProps>(mapStateToProps, mapDispatchToProps) (AppToolbar);

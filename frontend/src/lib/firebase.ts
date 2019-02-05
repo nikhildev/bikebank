@@ -1,7 +1,8 @@
-import * as firebase from 'firebase';
-
+import {initializeApp} from 'firebase/app';
+import { auth } from 'firebase';
+import { store } from '../index';
 import { User } from '../types/user';
-import { setLoginSuccess, setLogoutSuccess } from '../actions/index';
+import { setLoginSuccessAction, setLogoutSuccessAction } from '../actions/index';
 
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',
@@ -12,12 +13,13 @@ const config = {
   messagingSenderId: '60251799587',
 };
 
-firebase.initializeApp(config);
+initializeApp(config);
 
-const provider = new firebase.auth.GoogleAuthProvider();
+const provider = new auth.GoogleAuthProvider();
 
-export const login = async (): Promise<User> => {
-  return firebase.auth().signInWithPopup(provider)
+
+export const login = async (): Promise<User | null> => {
+  return auth().signInWithPopup(provider)
     .then(res => {
       const user: User  = {
         uid: res.user && res.user.uid,
@@ -25,12 +27,16 @@ export const login = async (): Promise<User> => {
         email: res.user && res.user.email,
         photoUrl: res.user && res.user.photoURL,
       }
-      setLoginSuccess(user);
+
+      store.dispatch(setLoginSuccessAction(user));
 
       if (window.localStorage) {
         window.localStorage.setItem('bikebankUser', JSON.stringify(user));
       }
       return user;
+    }).catch(error => {
+      console.error(error);
+      return Promise.reject(null);
     });
 }
 
@@ -43,13 +49,12 @@ export function getLoggedInUser(): User | null {
 };
 
 export const logout = async (): Promise<any> => {
-  console.log('gone');
-
-  firebase.auth().signOut().then(res => {
-    console.log(res);
-
-    setLogoutSuccess();
-  })
+  return auth().signOut().then(res => {
+    window.localStorage.removeItem('bikebankUser');
+    store.dispatch(setLogoutSuccessAction());
+  }).catch(error => {
+    console.error(error);
+  });
 }
 
 export interface IFirebaseDocument {

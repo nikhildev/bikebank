@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "connected-react-router": "^6.2.2",
     "firebase": "^5.8.1",
     "formik": "^1.4.2",
     "history": "^4.7.2",

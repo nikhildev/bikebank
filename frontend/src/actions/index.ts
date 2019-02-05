@@ -1,14 +1,14 @@
 import { ReduxActionTypes } from '../types/redux';
 import { User } from '../types/user';
-import store from '../store';
+// import store from '../store';
 
-export const setLoginSuccess = (user: User) => {
-  return store.dispatch(setLoginSuccessAction(user));
-}
+// export const setLoginSuccess = (user: User) => {
+//   return store.dispatch(setLoginSuccessAction(user));
+// }
 
-export const setLogoutSuccess = () => {
-  return store.dispatch(setLogoutSuccessAction());
-}
+// export const setLogoutSuccess = () => {
+//   return store.dispatch(setLogoutSuccessAction());
+// }
 
 export const setLoginSuccessAction = (user: User) => {
   const action = {
