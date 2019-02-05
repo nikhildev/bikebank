@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import './AppToolbar.css';
 import { User } from '../../types/user';
 import { login, logout } from '../../lib/firebase';
+import Avatar from '../Core/Avatar';
 
 interface IProps {
   appTitle: string,
-  user: User | boolean;
+  user: User;
 }
 
 interface IState {
-  user: User | false;
+  user: User;
 }
 
 class AppToolbar extends React.Component<IProps, IState> {
@@ -31,7 +32,12 @@ class AppToolbar extends React.Component<IProps, IState> {
         </nav>
         <div id="ToolbarActions">
           {this.props.user
-            ? <button onClick={logout}>Logout</button>
+            ? <div onClick={logout}>
+                <Avatar
+                  photoUrl={this.props.user.photoUrl}
+                  displayName={this.props.user.displayName}
+                />
+              </div>
             : <button onClick={login}>Login</button>
           }
         </div>
