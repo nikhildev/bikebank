@@ -18,17 +18,12 @@ interface IProps {
 }
 
 class DashboardPage extends React.Component<IProps & IState> {
-  // constructor(props: IProps & IState) {
-  //   super(props);
-  // }
-  
   public componentDidMount() {
-    getAxiosInstance().get('/ping').then(res => {
+    getAxiosInstance().get('/protected').then(res => {
       console.log(res)
     }).catch(error => {
       console.error(error);
     });
-
   }
 
   public render() {

@@ -9,8 +9,6 @@ export default function (
 
   switch (action.type) {
     case ReduxActionTypes.AUTHENTICATED:
-      console.log(action);
-      
       return action.payload;
       break;
     case ReduxActionTypes.UNAUTHENTICATED:

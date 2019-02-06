@@ -1,7 +1,14 @@
+const admin = require('firebase-admin');
+const serviceAccount = require('../../config/firebase-service-config.json');
+
 module.exports = {
   apiKeyAuth,
   accessTokenAuth,
 };
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 function apiKeyAuth(req, res, next) {
   const headerToValidate = 'x-api-key';
@@ -33,18 +40,23 @@ function apiKeyAuth(req, res, next) {
 }
 
 function accessTokenAuth(req, res, next) {
-  const headerToValidate = 'x-access-token';
+  const headerToValidate = 'x-id-token';
 
   if (req.headers[headerToValidate]) {
-    const accessToken = req.headers[headerToValidate];
-    let API_KEY;
+    const idToken = req.headers[headerToValidate];
 
-    if (accessToken) {
-      console.log(`Access token: ${accessToken}`);
+    admin.auth().verifyIdToken(idToken).then(decodedToken => {
+      req.user = {
+        uid: decodedToken.uid,
+        name: decodedToken.name,
+        email: decodedToken.email,
+        picture: decodedToken.picture,
+      }
       next();
-    } else {
+    }).catch(error => {
+      console.error(error);
       res.status(401).send('Invalid Access Token');
-    }
+    });
   } else {
     res.status(401).send('Access Token not found');
   }

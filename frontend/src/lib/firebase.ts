@@ -23,37 +23,30 @@ const firebaseApp = initializeApp(config);
 const provider = new auth.GoogleAuthProvider();
 
 
-export const login = async (): Promise<User | null> => {
+export const login = async (): Promise<User | null | void> => {
   return auth(firebaseApp).signInWithPopup(provider)
     .then(res => {
-      const authCredential = res.credential;
+      const currentUser = auth(firebaseApp).currentUser;
 
-      let accessToken: string = '';
-      let idToken: string = '';
+      if (currentUser !== null) {
+        currentUser.getIdToken().then(token => {
+          window.localStorage.setItem('bikebankTokens', JSON.stringify({
+            idToken: token,
+          }));
 
-      if (authCredential && 'accessToken' in authCredential) {
-        accessToken = authCredential['accessToken'];
+          const user: User  = {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            photoUrl: currentUser.photoURL,
+          }
+
+          window.localStorage.setItem('bikebankUser', JSON.stringify(user));
+          store.dispatch(setLoginSuccessAction(user));
+        }).catch(error => {
+          console.error(error);
+        });
       }
-
-      if (authCredential && 'idToken' in authCredential) {
-        idToken = authCredential['idToken'];
-      }
-      
-      window.localStorage.setItem('bikebankTokens', JSON.stringify({
-        accessToken,
-        idToken,
-      }));
-      
-      const user: User  = {
-        uid: res.user && res.user.uid,
-        displayName: res.user && res.user.displayName,
-        email: res.user && res.user.email,
-        photoUrl: res.user && res.user.photoURL,
-      }
-      window.localStorage.setItem('bikebankUser', JSON.stringify(user));
-      store.dispatch(setLoginSuccessAction(user));
-
-      return user;
     }).catch(error => {
       console.error(error);
       return Promise.reject(null);

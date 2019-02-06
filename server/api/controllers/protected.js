@@ -3,5 +3,5 @@ module.exports = {
 };
 
 function protected(req, res) {
-  res.json('success');
+  res.json({user: req.user});
 }
