@@ -1,0 +1,27 @@
+{
+  "name": "boiler-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "helmet": "^3.15.0",
+    "moment-timezone": "^0.5.23",
+    "swagger-express-mw": "^0.7.0",
+    "swagger-ui": "^3.20.5"
+  },
+  "devDependencies": {
+    "firebase-admin": "^6.5.0",
+    "should": "^13.2.3",
+    "supertest": "3.3.0",
+    "swagger-tools": "^0.10.4"
+  },
+  "scripts": {
+    "start": "swagger project start",
+    "dev": "swagger project start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikhil Dev Chunchu",
+  "license": "ISC"
+}

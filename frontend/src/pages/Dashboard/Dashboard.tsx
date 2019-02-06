@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { User } from '../../types/user';
 import { Bike, fakeData } from '../../types/bike';
+import axiosInstance from '../../lib/axios';
 
 // These Will be received through redux store
 interface IState {
@@ -17,9 +18,18 @@ interface IProps {
 }
 
 class DashboardPage extends React.Component<IProps & IState> {
-  // constructor(props: IProps & IState) {
-  //   super(props);
-  // }
+  constructor(props: IProps & IState) {
+    super(props);
+
+  }
+  
+  public componentDidMount() {
+    axiosInstance.get('/ping').then(res => {
+      console.log(res)
+    }).catch(error => {
+      console.error(error);
+    });
+  }
 
   public render() {
     return (

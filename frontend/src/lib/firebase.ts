@@ -27,12 +27,20 @@ export const login = async (): Promise<User | null> => {
         email: res.user && res.user.email,
         photoUrl: res.user && res.user.photoURL,
       }
+      const authCredential = res.credential;
+      let accessToken: string = '';
+
+      if (authCredential && 'accessToken' in authCredential) {
+        accessToken = authCredential['accessToken'];
+      }
 
       store.dispatch(setLoginSuccessAction(user));
 
       if (window.localStorage) {
         window.localStorage.setItem('bikebankUser', JSON.stringify(user));
+        window.localStorage.setItem('bikebankAccessToken', accessToken);
       }
+
       return user;
     }).catch(error => {
       console.error(error);
@@ -48,9 +56,23 @@ export function getLoggedInUser(): User | null {
   }
 };
 
+export function getAccessToken(): string | null {
+  if (window.localStorage && typeof window.localStorage.getItem('bikebankAccessToken')) {
+    try {
+      const accessToken = window.localStorage.getItem('bikebankAccessToken') || '';
+      return accessToken;
+    } catch (error) {
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
+
 export const logout = async (): Promise<any> => {
   return auth().signOut().then(res => {
     window.localStorage.removeItem('bikebankUser');
+    window.localStorage.removeItem('bikebankAccessToken');
     store.dispatch(setLogoutSuccessAction());
   }).catch(error => {
     console.error(error);

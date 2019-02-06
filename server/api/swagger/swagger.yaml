@@ -1,0 +1,81 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: REST API to demonstrate authentication mechanisms
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+securityDefinitions:
+  APIKeyHeader:
+     type: apiKey
+     in: header
+     name: X-API-Key
+  AccessTokenHeader:
+     type: apiKey
+     in: header
+     name: X-Access-Token
+paths:
+  /ping:
+    x-swagger-router-controller: ping
+    get:
+      description: Returns 'pong' to the caller
+      # used as the method name of the controller
+      operationId: ping
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /protected:
+    x-swagger-router-controller: protected
+    get:
+      description: Returns 'success' to the caller
+      # used as the method name of the controller
+      operationId: protected
+      security:
+        - AccessTokenHeader: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+# complex objects have schema definitions
+definitions:
+  BasicResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
