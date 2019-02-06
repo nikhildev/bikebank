@@ -1,8 +1,10 @@
 import * as axios from 'axios';
-import { getAccessToken } from '../lib/firebase';
+import { getTokens } from '../lib/firebase';
 
-const axiosInstance = axios.default.create();
 
-axiosInstance.defaults.headers.common['X-Access-Token'] = getAccessToken();
-
-export default axiosInstance;
+export const getAxiosInstance = () => {
+  const axiosInstance = axios.default.create();
+  axiosInstance.defaults.headers.common['X-Access-Token'] = getTokens().accessToken;
+  axiosInstance.defaults.headers.common['X-ID-Token'] = getTokens().idToken;
+  return axiosInstance;
+}

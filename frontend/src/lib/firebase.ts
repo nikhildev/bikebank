@@ -4,6 +4,11 @@ import { store } from '../index';
 import { User } from '../types/user';
 import { setLoginSuccessAction, setLogoutSuccessAction } from '../actions/index';
 
+export interface IFirebaseTokens {
+  accessToken?: string,
+  idToken?: string,
+};
+
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',
   authDomain: 'bike-bank.firebaseapp.com',
@@ -13,33 +18,40 @@ const config = {
   messagingSenderId: '60251799587',
 };
 
-initializeApp(config);
+const firebaseApp = initializeApp(config);
 
 const provider = new auth.GoogleAuthProvider();
 
 
 export const login = async (): Promise<User | null> => {
-  return auth().signInWithPopup(provider)
+  return auth(firebaseApp).signInWithPopup(provider)
     .then(res => {
+      const authCredential = res.credential;
+
+      let accessToken: string = '';
+      let idToken: string = '';
+
+      if (authCredential && 'accessToken' in authCredential) {
+        accessToken = authCredential['accessToken'];
+      }
+
+      if (authCredential && 'idToken' in authCredential) {
+        idToken = authCredential['idToken'];
+      }
+      
+      window.localStorage.setItem('bikebankTokens', JSON.stringify({
+        accessToken,
+        idToken,
+      }));
+      
       const user: User  = {
         uid: res.user && res.user.uid,
         displayName: res.user && res.user.displayName,
         email: res.user && res.user.email,
         photoUrl: res.user && res.user.photoURL,
       }
-      const authCredential = res.credential;
-      let accessToken: string = '';
-
-      if (authCredential && 'accessToken' in authCredential) {
-        accessToken = authCredential['accessToken'];
-      }
-
+      window.localStorage.setItem('bikebankUser', JSON.stringify(user));
       store.dispatch(setLoginSuccessAction(user));
-
-      if (window.localStorage) {
-        window.localStorage.setItem('bikebankUser', JSON.stringify(user));
-        window.localStorage.setItem('bikebankAccessToken', accessToken);
-      }
 
       return user;
     }).catch(error => {
@@ -56,23 +68,23 @@ export function getLoggedInUser(): User | null {
   }
 };
 
-export function getAccessToken(): string | null {
-  if (window.localStorage && typeof window.localStorage.getItem('bikebankAccessToken')) {
+export function getTokens(): IFirebaseTokens {
+  if (window.localStorage && typeof window.localStorage.getItem('bikebankTokens')) {
     try {
-      const accessToken = window.localStorage.getItem('bikebankAccessToken') || '';
-      return accessToken;
+      const tokens = JSON.parse(window.localStorage.getItem('bikebankTokens') || '');
+      return tokens;
     } catch (error) {
-      return null;
+      return {};
     }
   } else {
-    return null;
+    return {};
   }
 };
 
 export const logout = async (): Promise<any> => {
   return auth().signOut().then(res => {
     window.localStorage.removeItem('bikebankUser');
-    window.localStorage.removeItem('bikebankAccessToken');
+    window.localStorage.removeItem('bikebankTokens');
     store.dispatch(setLogoutSuccessAction());
   }).catch(error => {
     console.error(error);
