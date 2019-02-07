@@ -5,6 +5,15 @@ const app = require('express')();
 const apiKeyAuth = require('./api/helpers/security').apiKeyAuth;
 const accessTokenAuth = require('./api/helpers/security').accessTokenAuth;
 
+const lowdb = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('db.json');
+const db = lowdb(adapter);
+
+db.get('users')
+  .push({ id: 1, name: 'Nikhil Dev Chunchu'})
+  .write()
+
 const config = {
   appRoot: __dirname,
   swaggerSecurityHandlers: {
