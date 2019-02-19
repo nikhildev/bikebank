@@ -4,7 +4,7 @@ import * as React from 'react';
 import { IBike, BIKE_STATUS } from '../../types/bike';
 
 interface IState {
-  form: any;
+  form: IBike;
   error: any;
 }
 
@@ -12,9 +12,12 @@ const INNER_FORM = (props: FormikProps<IBike>) => {
   const { touched, errors, isSubmitting } = props;
 
   return (
-    <Form>
+    <Form style={{display: 'flex', flexDirection: 'column' }}>
       <Field type="input" name="make" />
       {touched.make && errors.make && <div>{errors.make}</div>}
+
+      <Field type="input" name="model" />
+      {touched.model && errors.model && <div>{errors.model}</div>}
 
       <button type="submit" disabled={isSubmitting}>
         Submit
@@ -23,7 +26,7 @@ const INNER_FORM = (props: FormikProps<IBike>) => {
   );
 }
 
-const MyForm = withFormik<IBike, IBike>({
+const RegisterForm = withFormik<IBike, IBike>({
   // Transform outer props into form values
   mapPropsToValues: props => {
     return {
@@ -61,7 +64,7 @@ const INITIAL_FORM: IBike = {
   color: '',
   description: '',
   id: '',
-  make: '',
+  make: 'test',
   model: '',
   ownerId: '',
   purchaseDate: '',
@@ -86,7 +89,7 @@ class RegisterBikePage extends React.Component<{}, IState> {
         }}
       >
         <h1>Register a new bike</h1>
-        <MyForm id="" serial="" status={0} />
+        <RegisterForm id="" serial="" status={0} />
       </main>
     );
   }
