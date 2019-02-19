@@ -1,3 +1,4 @@
+import performace from 'perf_hooks';
 const performace = require('perf_hooks').performance;
 const lowdb = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
