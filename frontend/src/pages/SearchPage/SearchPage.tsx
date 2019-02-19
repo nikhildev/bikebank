@@ -4,10 +4,10 @@ import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
 
 import { searchBikeByBin } from '../../api/search';
-import { Bike } from '../../types/bike';
+import { IBike } from '../../types/bike';
 
 interface IState {
-  bikes: Bike[];
+  bikes: IBike[];
   error: any;
 }
 

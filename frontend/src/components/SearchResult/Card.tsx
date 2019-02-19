@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { Bike } from '../../types/bike';
+import { IBike } from '../../types/bike';
 
-const SearchResultCard = (props: Bike) => {
+const SearchResultCard = (props: IBike) => {
   return (
     <div style={{
       backgroundColor: '#eee',

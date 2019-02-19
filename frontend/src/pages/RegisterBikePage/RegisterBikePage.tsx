@@ -1,14 +1,14 @@
 import { Formik } from 'formik';
 import * as React from 'react';
 
-import { Bike } from '../../types/bike';
+import { IBike } from '../../types/bike';
 
 interface IState {
   form: any;
   error: any;
 }
 
-const INITIAL_FORM: Bike = {
+const INITIAL_FORM: IBike = {
   accessories: '',
   color: '',
   description: '',
@@ -75,13 +75,13 @@ class RegisterBikePage extends React.Component<{}, IState> {
     );
   }
 
-  public handleSubmit = (values: Bike) => {
+  public handleSubmit = (values: IBike) => {
     console.info(values);
     // setSubmitting(false);
     
   }
 
-  private validateForm = (values: Bike) => {
+  private validateForm = (values: IBike) => {
     // values => {
     //   let errors = {};
     //   if (!values.email) {

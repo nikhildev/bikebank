@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { User } from '../../types/user';
-import { Bike, fakeData } from '../../types/bike';
+import { IBike, fakeData } from '../../types/bike';
 import { getAxiosInstance } from '../../lib/axios';
 
 // These Will be received through redux store
@@ -11,7 +11,7 @@ interface IState {
   user: User,
   ownProps: any;
   error?: any;
-  myBikes: Bike[],
+  myBikes: IBike[],
 }
 
 interface IProps {

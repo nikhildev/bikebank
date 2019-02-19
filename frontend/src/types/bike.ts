@@ -1,16 +1,14 @@
-export class Bike {
-  constructor (
-    public id: string,
-    public serial: string,
-    public status: number,
-    public ownerId?: string,
-    public purchaseDate?: string,
-    public make?: string,
-    public model?: string,
-    public color?: string,
-    public description?: string,
-    public accessories?: string,
-  ) {}
+export interface IBike {
+  id: string,
+  serial: string,
+  status: number,
+  ownerId?: string,
+  purchaseDate?: string,
+  make?: string,
+  model?: string,
+  color?: string,
+  description?: string,
+  accessories?: string,
 }
 
 export enum BIKE_STATUS {
@@ -20,7 +18,7 @@ export enum BIKE_STATUS {
   SOLD,
 };
 
-export const fakeData: Bike[] = [
+export const fakeData: IBike[] = [
   {
     id: '1',
     serial: '123',

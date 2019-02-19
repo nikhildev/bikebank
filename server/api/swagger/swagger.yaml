@@ -19,10 +19,6 @@ consumes:
 produces:
   - application/json
 securityDefinitions:
-  APIKeyHeader:
-     type: apiKey
-     in: header
-     name: X-API-Key
   AccessTokenHeader:
      type: apiKey
      in: header
@@ -51,6 +47,25 @@ paths:
       description: Returns 'success' to the caller
       # used as the method name of the controller
       operationId: protected
+      security:
+        - AccessTokenHeader: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /bikes:
+    x-swagger-router-controller: bikes
+    post:
+      description: Returns 'success' to the caller
+      # used as the method name of the controller
+      operationId: createBike
       security:
         - AccessTokenHeader: []
       responses:
