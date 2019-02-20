@@ -1,5 +1,17 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('../../config/firebase-service-config.json');
+let serviceAccount;
+
+try {
+  serviceAccount = require('../../config/firebase-service-config.json');
+} catch(error) {
+  switch (error.code) {
+    case 'MODULE_NOT_FOUND':
+      throw new Error('### FIREBASE CONFIG FILE NOT FOUND ###');
+      break;
+    default:
+      throw new Error('### An unknown error has occurred ###');
+  }
+}
 
 module.exports = {
   apiKeyAuth,
