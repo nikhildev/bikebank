@@ -29,7 +29,7 @@ export const login = async (): Promise<User | null | void> => {
       const currentUser = auth(firebaseApp).currentUser;
 
       if (currentUser !== null) {
-        currentUser.getIdToken().then(token => {
+        currentUser.getIdToken(true).then(token => {
           window.localStorage.setItem('bikebankTokens', JSON.stringify({
             idToken: token,
           }));
