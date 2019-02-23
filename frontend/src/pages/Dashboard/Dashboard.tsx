@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { User } from '../../types/user';
 import { IBike, fakeData } from '../../types/bike';
-import { getAxiosInstance } from '../../lib/axios';
+import { getAxiosInstance, AxiosErrors } from '../../lib/axios';
 
 // These Will be received through redux store
 interface IState {
@@ -26,7 +26,7 @@ class DashboardPage extends React.Component<IProps & IState> {
   public componentDidMount() {
     getAxiosInstance().get('/protected').then(res => {
       console.log(res)
-    }).catch((error: Error) => {
+    }).catch((error: AxiosErrors) => {
       this.setState({ error });
       console.error(error);
     });

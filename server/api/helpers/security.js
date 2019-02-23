@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+
 let serviceAccount;
 
 try {
