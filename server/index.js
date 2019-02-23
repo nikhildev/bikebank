@@ -2,13 +2,11 @@ const SwaggerExpress = require('swagger-express-mw');
 const SwaggerUi = require('swagger-tools/middleware/swagger-ui');
 const helmet = require('helmet')
 const app = require('express')();
-const apiKeyAuth = require('./api/helpers/security').apiKeyAuth;
 const accessTokenAuth = require('./api/helpers/security').accessTokenAuth;
 
 const config = {
   appRoot: __dirname,
   swaggerSecurityHandlers: {
-    APIKeyHeader: apiKeyAuth,
     AccessTokenHeader: accessTokenAuth,
   },
 };

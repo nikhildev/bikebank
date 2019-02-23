@@ -22,7 +22,7 @@ securityDefinitions:
   AccessTokenHeader:
      type: apiKey
      in: header
-     name: X-Access-Token
+     name: X-ID-Token
 paths:
   /ping:
     x-swagger-router-controller: ping
@@ -63,11 +63,17 @@ paths:
   /bikes:
     x-swagger-router-controller: bikes
     post:
-      description: Returns 'success' to the caller
+      description: Adds new bike information after validation
       # used as the method name of the controller
       operationId: createBike
       security:
         - AccessTokenHeader: []
+      parameters:
+        - name: bike
+          description: Bike Object
+          in: body
+          schema:
+            $ref: "#/definitions/Bike"
       responses:
         "200":
           description: Success
@@ -81,6 +87,18 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 # complex objects have schema definitions
 definitions:
+  Bike:
+    type: object
+    properties:
+      serial:
+        type: string
+      make:
+        type: string
+      model:
+        type: string
+    required:
+      - serial
+      - make
   BasicResponse:
     required:
       - message
