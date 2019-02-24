@@ -20,7 +20,7 @@ function accessTokenAuth(req, res, next) {
       }
       next();
     }).catch(error => {
-      console.error(error);
+      console.error(error.message);
       res.status(401).send('Invalid Access Token');
     });
   } else {
