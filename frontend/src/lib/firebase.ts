@@ -24,7 +24,8 @@ let currentUser: firebase.User | null;
 
 export async function refreshIdToken() {
   try {
-    if (currentUser !== null) {
+    if (currentUser) {
+      
       const token = await currentUser.getIdToken(true);
 
       window.localStorage.setItem('bikebankTokens', JSON.stringify({
@@ -40,9 +41,19 @@ export async function refreshIdToken() {
 
       window.localStorage.setItem('bikebankUser', JSON.stringify(user));
       store.dispatch(setLoginSuccessAction(user));
+
+      return Promise.resolve(token);
+    } else {
+      try {
+        await login();
+        return Promise.resolve();
+      } catch (error) {
+        console.error('There was an error with re-login');
+      }
     }
   } catch (error) {
     console.error(error);
+    return Promise.reject();
   }
 };
 
