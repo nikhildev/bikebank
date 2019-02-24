@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ReduxActionTypes } from '../../types/redux';
-// import { RouteComponentProps } from 'react-router'
 
 import './AppToolbar.css';
 import { User } from '../../types/user';
@@ -13,11 +10,6 @@ import Avatar from '../Core/Avatar';
 interface IProps {
   appTitle: string,
   user: User;
-}
-
-interface IDispatchProps {
-  dispatchLogin: Function,
-  dispatchLogout: Function,
 }
 
 interface IState {
@@ -67,13 +59,4 @@ function mapStateToProps(state: IState): IState {
   };
 }
 
-const mapDispatchToProps: any = (dispatch: Dispatch) => ({
-  dispatchLogin: () => dispatch({
-    type: ReduxActionTypes.AUTHENTICATED,
-  }),
-  dispatchLogout: () => dispatch({
-    type: ReduxActionTypes.UNAUTHENTICATED,
-  }),
-});
-
-export default connect<IState, IDispatchProps>(mapStateToProps, mapDispatchToProps) (AppToolbar);
+export default connect<IState>(mapStateToProps, {}) (AppToolbar);
