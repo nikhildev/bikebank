@@ -7,6 +7,7 @@ const firebaseDB = require('../helpers/firebase').firebaseDB;
 module.exports = {
   create,
   search,
+  getBikesForUser,
 };
 
 function validateBike(bikeObject) {
@@ -132,4 +133,21 @@ async function search(req, res) {
     bikes,
   });
   
+}
+
+async function getBikesForUser(req, res) {
+  const uid = req.user.uid;
+  let userSnapspot;
+
+  try {
+    userSnapspot = await Users.doc(uid).get();
+  } catch (error) {
+    res.status(500).json({
+      message: 'There was error fetching your bikes',
+    });
+  }
+
+  const bikes = userSnapspot.data().bikes || [];
+  
+  res.json(bikes);
 }

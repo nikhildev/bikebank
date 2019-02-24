@@ -62,6 +62,22 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /bikes:
     x-swagger-router-controller: bikes
+    get:
+      operationId: getBikesForUser
+      summary: Gets list of bikes for user
+      security:
+        - AccessTokenHeader: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       description: Adds new bike information after validation
       # used as the method name of the controller
