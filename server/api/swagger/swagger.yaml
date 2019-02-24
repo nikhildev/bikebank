@@ -101,6 +101,30 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  /bikes/{bikeId}:
+    x-swagger-router-controller: bikes
+    get:
+      operationId: getBikeById
+      summary: Gets bike details by id.
+      parameters:
+        - in: path
+          name: bikeId
+          type: string
+          required: true
+          description: Bike Id.
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
   /search/{serial}:
     x-swagger-router-controller: bikes
     get:

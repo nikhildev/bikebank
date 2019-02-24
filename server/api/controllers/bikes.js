@@ -8,6 +8,7 @@ module.exports = {
   create,
   search,
   getBikesForUser,
+  getBikeById,
 };
 
 function validateBike(bikeObject) {
@@ -150,4 +151,27 @@ async function getBikesForUser(req, res) {
   const bikes = userSnapspot.data().bikes || [];
   
   res.json(bikes);
+}
+
+async function getBikeById(req, res) {
+  const bikeId = req.swagger.params.bikeId.value || null;
+  
+  if (!bikeId) {
+    res.status(400).json({
+      message: 'Bike Id not specified',
+    });
+  }
+
+  let bikesSnapshot;
+  try {
+    bikesSnapshot = await Bikes.doc(bikeId).get();
+  } catch {
+    res.status(500).json({
+      message: 'There was an error fetching the bike information',
+    });
+  }
+
+  const bike = bikesSnapshot.data();
+
+  res.json(bike);
 }
