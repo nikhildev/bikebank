@@ -9,9 +9,12 @@ module.exports = {
 };
 
 function validateBike(bikeObject) {
-  let error;
+  let error = null;
+
   if (!bikeObject.serial.length) {
     error = 'Missing bike serial'
+  } else {
+    bikeObject.serial = bikeObject.serial.toUpperCase();
   }
 
   if (!bikeObject.make.length) {
@@ -20,11 +23,12 @@ function validateBike(bikeObject) {
 
   return {
     error,
+    bikeObject,
   };
 }
 
 async function createBike(req, res) {
-  const bikeRequestObject = req.swagger.params.bike.value;
+  // const bikeRequestObject = req.swagger.params.bike.value;
   const bikeValidationResult = validateBike(bikeRequestObject);
 
   if (bikeValidationResult.error) {
@@ -33,14 +37,14 @@ async function createBike(req, res) {
 
   const newBikeId = uuid.v4();
   const bikeObject = {
-    ...bikeRequestObject,
+    ...bikeValidationResult.bikeObject,
     id: newBikeId,
   };
   const userRef = Users.doc(req.user.uid);
 
   // Try fetching bike with the serial number in the request
   try {
-    const bikesSnapshot = await Bikes.where('serial', '==', bikeRequestObject.serial).get();
+    const bikesSnapshot = await Bikes.where('serial', '==', bikeValidationResult.bikeObject.serial).get();
     if (!bikesSnapshot.empty) {
       res.status(409).json({
         message: `Bike already registered`,
@@ -64,7 +68,7 @@ async function createBike(req, res) {
   }
 
   const bikes = userSnapshot.data().bikes || [];
-  const filteredBikes = bikes.filter(bike => bike.serial === bikeRequestObject.serial);
+  const filteredBikes = bikes.filter(bike => bike.serial === bikeValidationResult.bikeObject.serial);
 
   if (filteredBikes.length) {
     res.status(409).json({

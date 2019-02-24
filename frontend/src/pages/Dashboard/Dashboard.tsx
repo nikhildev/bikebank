@@ -23,8 +23,8 @@ class DashboardPage extends React.Component<IProps & IState> {
     error: false,
   }
 
-  public componentDidMount() {
-    getAxiosInstance().get('/protected').catch((error: AxiosErrors) => {
+  public async componentDidMount() {
+    await getAxiosInstance().get('/protected').catch((error: AxiosErrors) => {
       this.setState({ error });
       console.error(error);
     });
