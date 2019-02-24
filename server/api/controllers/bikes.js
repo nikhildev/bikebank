@@ -5,7 +5,8 @@ const Users = require('../helpers/firebase').Users;
 const firebaseDB = require('../helpers/firebase').firebaseDB;
 
 module.exports = {
-  createBike
+  create,
+  search,
 };
 
 function validateBike(bikeObject) {
@@ -27,8 +28,8 @@ function validateBike(bikeObject) {
   };
 }
 
-async function createBike(req, res) {
-  // const bikeRequestObject = req.swagger.params.bike.value;
+async function create(req, res) {
+  const bikeRequestObject = req.swagger.params.bike.value;
   const bikeValidationResult = validateBike(bikeRequestObject);
 
   if (bikeValidationResult.error) {
@@ -101,4 +102,34 @@ async function createBike(req, res) {
     });
   }
 
+}
+
+async function search(req, res) {
+  const serial = req.swagger.params.serial.value
+    ? req.swagger.params.serial.value.toUpperCase()
+    : null;
+  
+  if (!serial) {
+    res.status(400).json({
+      message: 'Bike serial must be specified',
+    });
+  }
+
+  let bikesSnapshot
+
+  try {
+    bikesSnapshot = await Bikes.where('serial', '==', serial).get();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'An unknown error has occurred',
+    });
+  }
+
+  const bikes = bikesSnapshot.docs.map(bike => bike.data());
+
+  res.json({
+    bikes,
+  });
+  
 }
