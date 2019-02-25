@@ -62,10 +62,26 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /bikes:
     x-swagger-router-controller: bikes
+    get:
+      operationId: getBikesForUser
+      summary: Gets list of bikes for user
+      security:
+        - AccessTokenHeader: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       description: Adds new bike information after validation
       # used as the method name of the controller
-      operationId: createBike
+      operationId: create
       security:
         - AccessTokenHeader: []
       parameters:
@@ -74,6 +90,52 @@ paths:
           in: body
           schema:
             $ref: "#/definitions/Bike"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /bikes/{bikeId}:
+    x-swagger-router-controller: bikes
+    get:
+      operationId: getBikeById
+      summary: Gets bike details by id.
+      parameters:
+        - in: path
+          name: bikeId
+          type: string
+          required: true
+          description: Bike Id.
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/BasicResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /search/{serial}:
+    x-swagger-router-controller: bikes
+    get:
+      operationId: search
+      summary: Searches for a bike by serial
+      parameters:
+        - in: path
+          name: serial
+          type: string
+          required: true
+          description: Bike serial number.
       responses:
         "200":
           description: Success
@@ -111,4 +173,3 @@ definitions:
     properties:
       message:
         type: string
-

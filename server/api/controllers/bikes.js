@@ -5,13 +5,19 @@ const Users = require('../helpers/firebase').Users;
 const firebaseDB = require('../helpers/firebase').firebaseDB;
 
 module.exports = {
-  createBike
+  create,
+  search,
+  getBikesForUser,
+  getBikeById,
 };
 
 function validateBike(bikeObject) {
-  let error;
+  let error = null;
+
   if (!bikeObject.serial.length) {
     error = 'Missing bike serial'
+  } else {
+    bikeObject.serial = bikeObject.serial.toUpperCase();
   }
 
   if (!bikeObject.make.length) {
@@ -20,10 +26,11 @@ function validateBike(bikeObject) {
 
   return {
     error,
+    bikeObject,
   };
 }
 
-async function createBike(req, res) {
+async function create(req, res) {
   const bikeRequestObject = req.swagger.params.bike.value;
   const bikeValidationResult = validateBike(bikeRequestObject);
 
@@ -33,14 +40,14 @@ async function createBike(req, res) {
 
   const newBikeId = uuid.v4();
   const bikeObject = {
-    ...bikeRequestObject,
+    ...bikeValidationResult.bikeObject,
     id: newBikeId,
   };
   const userRef = Users.doc(req.user.uid);
 
   // Try fetching bike with the serial number in the request
   try {
-    const bikesSnapshot = await Bikes.where('serial', '==', bikeRequestObject.serial).get();
+    const bikesSnapshot = await Bikes.where('serial', '==', bikeValidationResult.bikeObject.serial).get();
     if (!bikesSnapshot.empty) {
       res.status(409).json({
         message: `Bike already registered`,
@@ -64,7 +71,7 @@ async function createBike(req, res) {
   }
 
   const bikes = userSnapshot.data().bikes || [];
-  const filteredBikes = bikes.filter(bike => bike.serial === bikeRequestObject.serial);
+  const filteredBikes = bikes.filter(bike => bike.serial === bikeValidationResult.bikeObject.serial);
 
   if (filteredBikes.length) {
     res.status(409).json({
@@ -97,4 +104,74 @@ async function createBike(req, res) {
     });
   }
 
+}
+
+async function search(req, res) {
+  const serial = req.swagger.params.serial.value
+    ? req.swagger.params.serial.value.toUpperCase()
+    : null;
+  
+  if (!serial) {
+    res.status(400).json({
+      message: 'Bike serial must be specified',
+    });
+  }
+
+  let bikesSnapshot
+
+  try {
+    bikesSnapshot = await Bikes.where('serial', '==', serial).get();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'An unknown error has occurred',
+    });
+  }
+
+  const bikes = bikesSnapshot.docs.map(bike => bike.data());
+
+  res.json({
+    bikes,
+  });
+  
+}
+
+async function getBikesForUser(req, res) {
+  const uid = req.user.uid;
+  let userSnapspot;
+
+  try {
+    userSnapspot = await Users.doc(uid).get();
+  } catch (error) {
+    res.status(500).json({
+      message: 'There was error fetching your bikes',
+    });
+  }
+
+  const bikes = userSnapspot.data().bikes || [];
+  
+  res.json(bikes);
+}
+
+async function getBikeById(req, res) {
+  const bikeId = req.swagger.params.bikeId.value || null;
+  
+  if (!bikeId) {
+    res.status(400).json({
+      message: 'Bike Id not specified',
+    });
+  }
+
+  let bikesSnapshot;
+  try {
+    bikesSnapshot = await Bikes.doc(bikeId).get();
+  } catch {
+    res.status(500).json({
+      message: 'There was an error fetching the bike information',
+    });
+  }
+
+  const bike = bikesSnapshot.data();
+
+  res.json(bike);
 }
