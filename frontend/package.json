@@ -23,7 +23,8 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "prettier:format": "prettier --check --write \"src/**/*.ts\""
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

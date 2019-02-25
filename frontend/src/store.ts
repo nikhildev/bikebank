@@ -14,14 +14,11 @@ export default function configureStore(preloadedState?: any) {
     preloadedState,
     compose(
       // tslint:disable-next-line:no-string-literal
-      window['__REDUX_DEVTOOLS_EXTENSION__'] && window['__REDUX_DEVTOOLS_EXTENSION__'](),
-      applyMiddleware(
-        thunk,
-        routerMiddleware(history)
-      ),
-    )
+      window['__REDUX_DEVTOOLS_EXTENSION__'] &&
+        window['__REDUX_DEVTOOLS_EXTENSION__'](),
+      applyMiddleware(thunk, routerMiddleware(history)),
+    ),
   );
 
   return store;
-
 }

@@ -7,4 +7,4 @@ export enum ReduxActionTypes {
 export interface IReduxAction {
   type: ReduxActionTypes;
   payload?: any;
-};
+}
