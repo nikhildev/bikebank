@@ -1,16 +1,13 @@
-import { initializeApp } from 'firebase/app';
+import {initializeApp} from 'firebase/app';
 import { auth } from 'firebase';
 import { store } from '../index';
 import { User } from '../types/user';
-import {
-  setLoginSuccessAction,
-  setLogoutSuccessAction,
-} from '../actions/index';
+import { setLoginSuccessAction, setLogoutSuccessAction } from '../actions/index';
 
 export interface IFirebaseTokens {
-  accessToken?: string;
-  idToken?: string;
-}
+  accessToken?: string,
+  idToken?: string,
+};
 
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',
@@ -25,61 +22,49 @@ const firebaseApp = initializeApp(config);
 
 const provider = new auth.GoogleAuthProvider();
 
+
 export const login = async (): Promise<User | null | void> => {
-  return auth(firebaseApp)
-    .signInWithPopup(provider)
+  return auth(firebaseApp).signInWithPopup(provider)
     .then(res => {
       const currentUser = auth(firebaseApp).currentUser;
 
       if (currentUser !== null) {
-        currentUser
-          .getIdToken(true)
-          .then(token => {
-            window.localStorage.setItem(
-              'bikebankTokens',
-              JSON.stringify({
-                idToken: token,
-              }),
-            );
+        currentUser.getIdToken(true).then(token => {
+          window.localStorage.setItem('bikebankTokens', JSON.stringify({
+            idToken: token,
+          }));
 
-            const user: User = {
-              uid: currentUser.uid,
-              displayName: currentUser.displayName,
-              email: currentUser.email,
-              photoUrl: currentUser.photoURL,
-            };
+          const user: User  = {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            photoUrl: currentUser.photoURL,
+          }
 
-            window.localStorage.setItem('bikebankUser', JSON.stringify(user));
-            store.dispatch(setLoginSuccessAction(user));
-          })
-          .catch(error => {
-            console.error(error);
-          });
+          window.localStorage.setItem('bikebankUser', JSON.stringify(user));
+          store.dispatch(setLoginSuccessAction(user));
+        }).catch(error => {
+          console.error(error);
+        });
       }
-    })
-    .catch(error => {
+    }).catch(error => {
       console.error(error);
       return Promise.reject(null);
     });
-};
+}
 
 export function getLoggedInUser(): User | null {
   if (window.localStorage && window.localStorage.getItem('bikebankUser')) {
     return JSON.parse(window.localStorage.getItem('bikebankUser') || '');
   } else {
-    return null;
+    return null
   }
-}
+};
 
 export function getTokens(): IFirebaseTokens {
-  if (
-    window.localStorage &&
-    typeof window.localStorage.getItem('bikebankTokens')
-  ) {
+  if (window.localStorage && typeof window.localStorage.getItem('bikebankTokens')) {
     try {
-      const tokens = JSON.parse(
-        window.localStorage.getItem('bikebankTokens') || '',
-      );
+      const tokens = JSON.parse(window.localStorage.getItem('bikebankTokens') || '');
       return tokens;
     } catch (error) {
       return {};
@@ -87,20 +72,17 @@ export function getTokens(): IFirebaseTokens {
   } else {
     return {};
   }
-}
+};
 
 export const logout = async (): Promise<any> => {
-  return auth()
-    .signOut()
-    .then(res => {
-      window.localStorage.removeItem('bikebankUser');
-      window.localStorage.removeItem('bikebankTokens');
-      store.dispatch(setLogoutSuccessAction());
-    })
-    .catch(error => {
-      console.error(error);
-    });
-};
+  return auth().signOut().then(res => {
+    window.localStorage.removeItem('bikebankUser');
+    window.localStorage.removeItem('bikebankTokens');
+    store.dispatch(setLogoutSuccessAction());
+  }).catch(error => {
+    console.error(error);
+  });
+}
 
 export interface IFirebaseDocument {
   fields: any;
@@ -136,4 +118,4 @@ export const transformRestData = (response: any) => {
     status: response.status,
   };
   return transformedData;
-};
+}

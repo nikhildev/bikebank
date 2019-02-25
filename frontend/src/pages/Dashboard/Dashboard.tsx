@@ -8,26 +8,26 @@ import { getAxiosInstance, AxiosErrors } from '../../lib/axios';
 
 // These Will be received through redux store
 interface IState {
-  user?: User;
+  user?: User,
   error?: any;
-  ownProps?: any;
-  myBikes?: IBike[];
+  ownProps?: any,
+  myBikes?: IBike[],
 }
 
-interface IProps {}
+interface IProps {
+}
 
 class DashboardPage extends React.Component<IProps & IState> {
+
   readonly state: IState = {
     error: false,
-  };
+  }
 
   public componentDidMount() {
-    getAxiosInstance()
-      .get('/protected')
-      .catch((error: AxiosErrors) => {
-        this.setState({ error });
-        console.error(error);
-      });
+    getAxiosInstance().get('/protected').catch((error: AxiosErrors) => {
+      this.setState({ error });
+      console.error(error);
+    });
   }
 
   public render() {
@@ -41,23 +41,28 @@ class DashboardPage extends React.Component<IProps & IState> {
       >
         {this.props.user && <h1>Dashboard - {this.props.user.displayName}</h1>}
         <Link to="dashboard/register">Register a new bike</Link>
-        <label>sdf</label>
 
-        {this.props.myBikes && (
+        {this.props.myBikes && 
           <div>
             {this.props.myBikes.map(bike => (
-              <div className="bike-card" key={bike.id}>
+              <div
+                className="bike-card"
+                key={bike.id}
+                >
                 <span>Make: {bike.make}</span>
                 <span>Model: {bike.model}</span>
                 <span>Serial: {bike.serial}</span>
               </div>
             ))}
           </div>
-        )}
+        }
         {this.state.error && <div>Error fetching your bike information</div>}
+
       </main>
     );
   }
+
+
 }
 
 function mapStateToProps(state: IState): IState {
@@ -68,7 +73,4 @@ function mapStateToProps(state: IState): IState {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  null,
-)(DashboardPage);
+export default connect(mapStateToProps, null) (DashboardPage);
