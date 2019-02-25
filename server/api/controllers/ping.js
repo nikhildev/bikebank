@@ -1,7 +1,7 @@
 const performace = require('perf_hooks').performance;
 
 module.exports = {
-  ping
+  ping,
 };
 
 function ping(req, res) {

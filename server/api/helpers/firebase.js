@@ -5,7 +5,7 @@ let serviceAccount;
 
 try {
   serviceAccount = require('../../config/firebase-service-config.json');
-} catch(error) {
+} catch (error) {
   switch (error.code) {
     case 'MODULE_NOT_FOUND':
       throw new Error('### FIREBASE CONFIG FILE NOT FOUND ###');
@@ -31,6 +31,4 @@ module.exports = {
   firebaseDB,
   Bikes,
   Users,
-}
-
-
+};

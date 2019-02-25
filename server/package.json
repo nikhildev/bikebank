@@ -22,7 +22,8 @@
   "scripts": {
     "start": "swagger project start",
     "dev": "swagger project start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier:format": "prettier --check --write \"api/**/*.js\""
   },
   "author": "Nikhil Dev Chunchu",
   "license": "ISC"

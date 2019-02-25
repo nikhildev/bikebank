@@ -11,18 +11,22 @@ function accessTokenAuth(req, res, next) {
   if (req.headers[headerToValidate]) {
     const idToken = req.headers[headerToValidate];
 
-    firebaseAdmin.auth().verifyIdToken(idToken).then(decodedToken => {
-      req.user = {
-        uid: decodedToken.uid,
-        name: decodedToken.name,
-        email: decodedToken.email,
-        picture: decodedToken.picture,
-      }
-      next();
-    }).catch(error => {
-      console.error(error);
-      res.status(401).send('Invalid Access Token');
-    });
+    firebaseAdmin
+      .auth()
+      .verifyIdToken(idToken)
+      .then(decodedToken => {
+        req.user = {
+          uid: decodedToken.uid,
+          name: decodedToken.name,
+          email: decodedToken.email,
+          picture: decodedToken.picture,
+        };
+        next();
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(401).send('Invalid Access Token');
+      });
   } else {
     res.status(401).send('Access Token not found');
   }

@@ -15,9 +15,10 @@
         "react"
     ],
     "rules": {
+        "prettier/prettier": "error",
         "indent": [
             "error",
-            4
+            2
         ],
         "linebreak-style": [
             "error",
