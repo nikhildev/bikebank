@@ -11,11 +11,11 @@ export interface IBike {
   accessories?: string;
 }
 
-export enum BIKE_STATUS {
-  UNREGISTERED,
-  IN_POSSESSION,
-  STOLEN,
-  SOLD,
+export enum BikeStatus {
+  Unregistered,
+  InPossession,
+  Stolen,
+  Sold,
 }
 
 export const fakeData: IBike[] = [

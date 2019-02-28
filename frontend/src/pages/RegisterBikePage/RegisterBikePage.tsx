@@ -1,7 +1,7 @@
 import { FormikProps, FormikErrors, withFormik, Form, Field } from 'formik';
 import * as React from 'react';
 
-import { IBike, BIKE_STATUS } from '../../types/bike';
+import { IBike, BikeStatus } from '../../types/bike';
 
 interface IState {
   form: IBike;
@@ -12,7 +12,7 @@ const INNER_FORM = (props: FormikProps<IBike>) => {
   const { touched, errors, isSubmitting } = props;
 
   return (
-    <Form style={{display: 'flex', flexDirection: 'column' }}>
+    <Form style={{ display: 'flex', flexDirection: 'column' }}>
       <Field type="input" name="make" />
       {touched.make && errors.make && <div>{errors.make}</div>}
 
@@ -24,7 +24,7 @@ const INNER_FORM = (props: FormikProps<IBike>) => {
       </button>
     </Form>
   );
-}
+};
 
 const RegisterForm = withFormik<IBike, IBike>({
   // Transform outer props into form values
@@ -39,7 +39,7 @@ const RegisterForm = withFormik<IBike, IBike>({
       ownerId: props.ownerId || '',
       purchaseDate: props.purchaseDate || '',
       serial: props.serial || '',
-      status: props.status || BIKE_STATUS.IN_POSSESSION,
+      status: props.status || BikeStatus.InPossession,
     };
   },
 
@@ -54,7 +54,7 @@ const RegisterForm = withFormik<IBike, IBike>({
 
   handleSubmit: values => {
     console.log(values);
-    
+
     // do submitting things
   },
 })(INNER_FORM);
@@ -69,11 +69,10 @@ const INITIAL_FORM: IBike = {
   ownerId: '',
   purchaseDate: '',
   serial: '',
-  status: BIKE_STATUS.IN_POSSESSION,
-}
+  status: BikeStatus.InPossession,
+};
 
 class RegisterBikePage extends React.Component<{}, IState> {
-
   readonly state: IState = {
     error: null,
     form: INITIAL_FORM,
@@ -97,8 +96,7 @@ class RegisterBikePage extends React.Component<{}, IState> {
   public handleSubmit = (values: IBike) => {
     console.info(values);
     // setSubmitting(false);
-    
-  }
+  };
 
   // private validateForm = (values: IBike) => {
   //   // values => {
@@ -114,7 +112,6 @@ class RegisterBikePage extends React.Component<{}, IState> {
   //   // }
   //   // return true;
   // }
-
 }
 
 export default RegisterBikePage;
