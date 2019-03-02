@@ -4,8 +4,8 @@ import { store } from '../index';
 import { setLogoutSuccessAction } from 'src/actions';
 
 export enum AxiosErrors {
-  UNKNOWN = 'UNKNOWN',
-  UNAUTHORIZED = 'UNAUTHORIZED',
+  Unknown = 'UNKNOWN',
+  Unauthorized = 'UNAUTHORIZED',
 }
 
 export const getAxiosInstance = () => {
@@ -14,15 +14,15 @@ export const getAxiosInstance = () => {
   axiosInstance.interceptors.response.use(
     res => res,
     (error: axios.AxiosError) => {
-      let axiosError = AxiosErrors.UNKNOWN;
+      let axiosError = AxiosErrors.Unknown;
       if (error.response) {
         switch (error.response.status) {
           case 401:
-            axiosError = AxiosErrors.UNAUTHORIZED;
+            axiosError = AxiosErrors.Unauthorized;
             store.dispatch(setLogoutSuccessAction());
             break;
           default:
-            axiosError = AxiosErrors.UNKNOWN;
+            axiosError = AxiosErrors.Unknown;
         }
       }
       return Promise.reject(axiosError);
