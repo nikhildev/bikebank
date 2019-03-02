@@ -3,43 +3,63 @@ import * as React from 'react';
 import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
 
-import { searchBikeByBin } from '../../api/search';
+// import { searchBikeByBin } from '../../api/search';
 import { IBike } from '../../types/bike';
+import { getAxiosInstance, AxiosErrors } from '../../lib/axios';
+import { AxiosResponse } from 'axios';
+import { RouterProps } from 'react-router';
 
 interface IState {
+  searchSerial: string;
+  isSearching: boolean;
   bikes: IBike[];
   error: any;
 }
 
-class SearchPage extends React.Component<{}, IState> {
+class SearchPage extends React.Component<RouterProps, IState> {
   constructor(props: any) {
     super(props);
 
     this.state = {
+      searchSerial: '',
+      isSearching: false,
       bikes: [],
       error: null,
     };
+
+    console.log(this.props);
   }
 
   public searchBike = (bikeId: string) => {
-    searchBikeByBin(bikeId)
-      .then(res => {
+    this.props.history.push(`/search/${bikeId}`);
+    getAxiosInstance()
+      .get(`/search/${bikeId}`)
+      .then((bikes: AxiosResponse<IBike[]>) => {
         this.setState({
-          bikes: res.data,
+          bikes: bikes.data,
+          isSearching: false,
         });
       })
-      .catch(err => {
+      .catch((error: AxiosErrors) => {
         this.setState({
-          error: err,
+          error,
+          isSearching: false,
         });
+        console.error(error);
       });
   };
 
   public handleSearchSubmit = (bin: string) => {
+    this.setState({
+      isSearching: true,
+      searchSerial: bin,
+    });
     this.searchBike(bin);
   };
 
   public render() {
+    console.log(this.state.bikes.length);
+
     return (
       <main
         style={{
@@ -50,14 +70,16 @@ class SearchPage extends React.Component<{}, IState> {
       >
         <h2>Search</h2>
         <SearchInputMain onSearch={this.handleSearchSubmit} />
-        {this.state.bikes.map(bike => (
-          <SearchResultCard
-            key={bike.id}
-            id={bike.id}
-            serial={bike.serial}
-            status={bike.status}
-          />
-        ))}
+
+        {/* Search complete and at least one bike found */}
+        {this.state.bikes.length && !this.state.isSearching && (
+          <div>
+            <h3>Bikes found with the serial {this.state.searchSerial}</h3>
+            {this.state.bikes.map(bike => (
+              <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
+            ))}
+          </div>
+        )}
       </main>
     );
   }

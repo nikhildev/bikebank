@@ -18,6 +18,13 @@ export enum BIKE_STATUS {
   SOLD,
 }
 
+export const BIKE_STATUS_LABELS = {
+  0: 'Unregistered',
+  1: "In owner's possession",
+  2: 'REPORTED STOLEN',
+  3: 'REPORTED SOLD',
+};
+
 export const fakeData: IBike[] = [
   {
     id: '1',

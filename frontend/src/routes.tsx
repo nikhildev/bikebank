@@ -6,11 +6,20 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import DashboardPage from './pages/Dashboard/Dashboard';
 import Protected from './components/Protected';
 
-const AppRoutes: React.FunctionComponent = () => 
+const AppRoutes: React.FunctionComponent = () => (
   <Switch>
     <Route path="/search" component={SearchPage} />
-    <Route exact={true} path="/dashboard/register"><Protected><RegisterBikePage /></Protected></Route>
-    <Route path="/dashboard"><Protected><DashboardPage /></Protected></Route>
+    <Route exact={true} path="/dashboard/register">
+      <Protected>
+        <RegisterBikePage />
+      </Protected>
+    </Route>
+    <Route path="/dashboard">
+      <Protected>
+        <DashboardPage />
+      </Protected>
+    </Route>
   </Switch>
+);
 
 export default AppRoutes;

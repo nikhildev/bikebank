@@ -135,9 +135,7 @@ async function search(req, res) {
 
   const bikes = bikesSnapshot.docs.map(bike => bike.data());
 
-  res.json({
-    bikes,
-  });
+  res.json(bikes);
 }
 
 async function getBikesForUser(req, res) {
