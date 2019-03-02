@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-import { IBike } from '../../types/bike';
 import './Card.css';
-import { BIKE_STATUS_LABELS } from '../../types/bike';
+import { BIKE_STATUS_LABELS, IBike } from '../../types/bike';
 
 interface IProps {
   key: string;

@@ -7,7 +7,7 @@ import SearchResultCard from '../../components/SearchResult/Card';
 import { IBike } from '../../types/bike';
 import { getAxiosInstance, AxiosErrors } from '../../lib/axios';
 import { AxiosResponse } from 'axios';
-import { RouterProps } from 'react-router';
+import { ConnectedRouterProps } from 'connected-react-router';
 
 interface IState {
   searchSerial: string;
@@ -16,21 +16,27 @@ interface IState {
   error: any;
 }
 
-class SearchPage extends React.Component<RouterProps, IState> {
+class SearchPage extends React.Component<ConnectedRouterProps, IState> {
+  bikeId: string;
+
   constructor(props: any) {
     super(props);
-
+    this.bikeId = this.props['match'].params.bikeId;
     this.state = {
       searchSerial: '',
       isSearching: false,
       bikes: [],
       error: null,
     };
-
-    console.log(this.props);
   }
 
-  public searchBike = (bikeId: string) => {
+  componentDidMount() {
+    if (this.bikeId.length) {
+      this.handleSearchSubmit(this.bikeId);
+    }
+  }
+
+  private searchBike = (bikeId: string) => {
     this.props.history.push(`/search/${bikeId}`);
     getAxiosInstance()
       .get(`/search/${bikeId}`)
