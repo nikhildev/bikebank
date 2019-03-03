@@ -2,13 +2,10 @@ import * as React from 'react';
 
 import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
-
-// import { searchBikeByBin } from '../../api/search';
 import { IBike } from '../../types/bike';
-import { getAxiosInstance, AxiosErrors } from '../../lib/axios';
-import { AxiosResponse } from 'axios';
 import { ConnectedRouterProps } from 'connected-react-router';
 import { RequestStatus } from 'src/types/http';
+import { searchBikeByBin } from 'src/api/search';
 
 interface IState {
   requestStatus: RequestStatus;
@@ -24,7 +21,6 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
     bikes: [],
     error: null,
   };
-  bikeId: string;
 
   componentDidMount() {
     if (
@@ -35,23 +31,22 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
     }
   }
 
-  private searchBike = (bikeId: string) => {
+  private searchBike = async (bikeId: string) => {
     this.props.history.push(`/search/${bikeId}`);
-    getAxiosInstance()
-      .get(`/search/${bikeId}`)
-      .then((bikes: AxiosResponse<IBike[]>) => {
-        this.setState({
-          bikes: bikes.data,
-          requestStatus: RequestStatus.Success,
-        });
-      })
-      .catch((error: AxiosErrors) => {
-        this.setState({
-          error,
-          requestStatus: RequestStatus.Error,
-        });
-        console.error(error);
+    let bikes;
+
+    try {
+      bikes = await searchBikeByBin(bikeId);
+      this.setState({
+        bikes,
+        requestStatus: RequestStatus.Success,
       });
+    } catch (error) {
+      this.setState({
+        error,
+        requestStatus: RequestStatus.Error,
+      });
+    }
   };
 
   public handleSearchSubmit = (bin: string) => {

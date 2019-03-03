@@ -5,9 +5,11 @@ import RegisterBikePage from './pages/RegisterBikePage/RegisterBikePage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import DashboardPage from './pages/Dashboard/Dashboard';
 import Protected from './components/Protected';
+import HomePage from './pages/HomePage/HomePage';
 
 const AppRoutes: React.FunctionComponent = () => (
   <Switch>
+    <Route path="/" exact={true} component={HomePage} />
     <Route path="/search/:bikeId" component={SearchPage} />
     <Route path="/search" component={SearchPage} />
     <Route exact={true} path="/dashboard/register">

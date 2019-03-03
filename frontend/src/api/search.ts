@@ -1,20 +1,13 @@
-import { default as axios } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
+import { getAxiosInstance } from 'src/lib/axios';
+import { IBike } from 'src/types/bike';
 
-import { transformRestData } from '../lib/firebase';
-
-const API_BASE_URL =
-  'https://firestore.googleapis.com/v1beta1/projects/bike-bank/databases/(default)/documents';
-
-export function searchBikeByBin(bikeBin: string): Promise<any> {
+export async function searchBikeByBin(bikeBin: string): Promise<any> {
   if (bikeBin.length) {
-    return axios
-      .get(`${API_BASE_URL}/Bikes`)
-      .then(res => transformRestData(res))
-      .then(res => {
-        return {
-          ...res,
-        };
-      });
+    return getAxiosInstance()
+      .get(`/search/${bikeBin}`)
+      .then((bikes: AxiosResponse<IBike[]>) => bikes.data)
+      .catch((error: AxiosError) => error);
   } else {
     return Promise.reject([]);
   }
