@@ -30,7 +30,9 @@ class DashboardPage extends React.Component<
   };
 
   async componentDidMount() {
-    this.props.requestBikesForUser();
+    if (!this.props.bikes.lastUpdated) {
+      this.props.requestBikesForUser();
+    }
   }
 
   public render() {
