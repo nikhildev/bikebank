@@ -1,4 +1,3 @@
-// import * as promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'connected-react-router';

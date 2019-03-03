@@ -8,31 +8,30 @@ import { IBike } from '../../types/bike';
 import { getAxiosInstance, AxiosErrors } from '../../lib/axios';
 import { AxiosResponse } from 'axios';
 import { ConnectedRouterProps } from 'connected-react-router';
+import { RequestStatus } from 'src/types/http';
 
 interface IState {
+  requestStatus: RequestStatus;
   searchSerial: string;
-  isSearching: boolean;
   bikes: IBike[];
   error: any;
 }
 
 class SearchPage extends React.Component<ConnectedRouterProps, IState> {
+  readonly state: IState = {
+    requestStatus: RequestStatus.Initial,
+    searchSerial: '',
+    bikes: [],
+    error: null,
+  };
   bikeId: string;
 
-  constructor(props: any) {
-    super(props);
-    this.bikeId = this.props['match'].params.bikeId;
-    this.state = {
-      searchSerial: '',
-      isSearching: false,
-      bikes: [],
-      error: null,
-    };
-  }
-
   componentDidMount() {
-    if (this.bikeId.length) {
-      this.handleSearchSubmit(this.bikeId);
+    if (
+      this.props['match'].params.bikeId &&
+      this.props['match'].params.bikeId.length
+    ) {
+      this.handleSearchSubmit(this.props['match'].params.bikeId);
     }
   }
 
@@ -43,13 +42,13 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
       .then((bikes: AxiosResponse<IBike[]>) => {
         this.setState({
           bikes: bikes.data,
-          isSearching: false,
+          requestStatus: RequestStatus.Success,
         });
       })
       .catch((error: AxiosErrors) => {
         this.setState({
           error,
-          isSearching: false,
+          requestStatus: RequestStatus.Error,
         });
         console.error(error);
       });
@@ -57,15 +56,13 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
 
   public handleSearchSubmit = (bin: string) => {
     this.setState({
-      isSearching: true,
+      requestStatus: RequestStatus.Started,
       searchSerial: bin,
     });
     this.searchBike(bin);
   };
 
   public render() {
-    console.log(this.state.bikes.length);
-
     return (
       <main
         style={{
@@ -77,14 +74,27 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
         <h2>Search</h2>
         <SearchInputMain onSearch={this.handleSearchSubmit} />
 
-        {/* Search complete and at least one bike found */}
-        {this.state.bikes.length && !this.state.isSearching && (
-          <div>
-            <h3>Bikes found with the serial {this.state.searchSerial}</h3>
-            {this.state.bikes.map(bike => (
-              <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
-            ))}
-          </div>
+        {this.state.requestStatus === RequestStatus.Started && (
+          <div>Searching...</div>
+        )}
+
+        {this.state.requestStatus === RequestStatus.Success &&
+          !this.state.bikes.length && (
+            <div>No bikes found for the serial {this.state.searchSerial}</div>
+          )}
+
+        {this.state.requestStatus === RequestStatus.Success &&
+          this.state.bikes.length > 0 && (
+            <div>
+              <h3>Bikes found with the serial {this.state.searchSerial}</h3>
+              {this.state.bikes.map(bike => (
+                <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
+              ))}
+            </div>
+          )}
+
+        {this.state.requestStatus === RequestStatus.Error && (
+          <div>An error occurred while searching.</div>
         )}
       </main>
     );
