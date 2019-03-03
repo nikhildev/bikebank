@@ -9,6 +9,12 @@ export function loadingBikes() {
   };
 }
 
+export function resetBikes() {
+  return {
+    type: ReduxActionTypes.ResetUserBikes,
+  };
+}
+
 export function receivedBikes(bikes: string[]) {
   return {
     type: ReduxActionTypes.UserBikesSuccess,
@@ -22,8 +28,12 @@ export function errorReceivingBikes() {
   };
 }
 
-export function requestBikesForUser() {
+export function requestBikesForUser(refresh?: boolean) {
   return (dispatch: Dispatch, getState: any) => {
+    if (refresh) {
+      dispatch(resetBikes());
+    }
+
     dispatch(loadingBikes());
 
     getAxiosInstance()

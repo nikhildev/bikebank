@@ -8,7 +8,7 @@ module.exports = {
   create,
   search,
   getBikesForUser,
-  getBikeById,
+  getBikesByIds,
 };
 
 function validateBike(bikeObject) {
@@ -150,30 +150,43 @@ async function getBikesForUser(req, res) {
     });
   }
 
-  const bikes = userSnapspot.data().bikes || [];
+  const bikeIds = userSnapspot.data().bikes || [];
+  const bikes = await fetchBikesDetails(bikeIds);
 
   res.json(bikes);
 }
 
-async function getBikeById(req, res) {
-  const bikeId = req.swagger.params.bikeId.value || null;
+async function fetchBikesDetails(bikeIds) {
+  if (bikeIds.length) {
+    let bikeRefs = bikeIds.map(bikeId => Bikes.doc(bikeId));
 
-  if (!bikeId) {
+    try {
+      const bikesSnapshot = await firebaseDB.getAll(...bikeRefs);
+      const bikes = bikesSnapshot.map(bike => bike.data());
+      return bikes;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return [];
+}
+
+async function getBikesByIds(req, res) {
+  const bikeIdString = req.swagger.params.bikeIds.value || '';
+  let bikeIds = bikeIdString.split(',');
+
+  if (!bikeIds.length) {
     res.status(400).json({
-      message: 'Bike Id not specified',
+      message: 'Bike Ids not specified',
     });
   }
 
-  let bikesSnapshot;
-  try {
-    bikesSnapshot = await Bikes.doc(bikeId).get();
-  } catch {
-    res.status(500).json({
-      message: 'There was an error fetching the bike information',
-    });
+  const bikes = await fetchBikesDetails(bikeIds);
+
+  if (bikes.length === 1) {
+    bikes = bikes[0];
   }
 
-  const bike = bikesSnapshot.data();
-
-  res.json(bike);
+  res.json(bikes);
 }

@@ -29,11 +29,15 @@ class DashboardPage extends React.Component<
     error: false,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     if (!this.props.bikes.lastUpdated) {
       this.props.requestBikesForUser();
     }
   }
+
+  refreshUserBikes = () => {
+    this.props.requestBikesForUser(true);
+  };
 
   public render() {
     return (
@@ -47,17 +51,16 @@ class DashboardPage extends React.Component<
         {this.props.user && <h1>Dashboard - {this.props.user.displayName}</h1>}
         <Link to="dashboard/register">Register a new bike</Link>
 
+        <button onClick={this.refreshUserBikes}>Refresh</button>
+
         {this.props.bikes.isFetching && <h3>Loading your bikes...</h3>}
 
         {this.props.bikes && (
           <div>
             {this.props.bikes.items.map(bike => {
-              const bikeObj = {
-                id: bike,
-                serial: bike,
-                status: 1,
-              };
-              return <SearchResultCard key={bike} id={bike} bike={bikeObj} />;
+              return (
+                <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
+              );
             })}
           </div>
         )}

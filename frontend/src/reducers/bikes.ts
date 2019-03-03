@@ -14,6 +14,10 @@ export default function(
   action: AnyAction,
 ): any {
   switch (action.type) {
+    case ReduxActionTypes.ResetUserBikes:
+      state = INITIAL_STATE;
+      return state;
+      break;
     case ReduxActionTypes.UserBikesLoading:
       state = {
         ...state,

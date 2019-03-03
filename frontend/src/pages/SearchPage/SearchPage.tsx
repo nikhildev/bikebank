@@ -5,7 +5,7 @@ import SearchResultCard from '../../components/SearchResult/Card';
 import { IBike } from '../../types/bike';
 import { ConnectedRouterProps } from 'connected-react-router';
 import { RequestStatus } from 'src/types/http';
-import { searchBikeByBin } from 'src/api/search';
+import { searchBikeByBin } from 'src/api/bikes';
 
 interface IState {
   requestStatus: RequestStatus;

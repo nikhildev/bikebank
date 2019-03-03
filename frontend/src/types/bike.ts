@@ -28,6 +28,6 @@ export const BIKE_STATUS_LABELS = {
 export interface IBikeDispatchProps {
   isFetching: boolean;
   lastUpdated?: number;
-  items: string[];
+  items: IBike[];
   hasError?: Boolean;
 }

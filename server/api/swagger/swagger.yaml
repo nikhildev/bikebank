@@ -1,6 +1,6 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  version: "0.0.1"
+  version: '0.0.1'
   title: REST API to demonstrate authentication mechanisms
 # during dev, should point to your local machine
 host: localhost:10010
@@ -20,9 +20,9 @@ produces:
   - application/json
 securityDefinitions:
   AccessTokenHeader:
-     type: apiKey
-     in: header
-     name: X-ID-Token
+    type: apiKey
+    in: header
+    name: X-ID-Token
 paths:
   /ping:
     x-swagger-router-controller: ping
@@ -31,16 +31,16 @@ paths:
       # used as the method name of the controller
       operationId: ping
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/BasicResponse"
+            $ref: '#/definitions/BasicResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
   /protected:
     x-swagger-router-controller: protected
     get:
@@ -50,16 +50,16 @@ paths:
       security:
         - AccessTokenHeader: []
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/BasicResponse"
+            $ref: '#/definitions/BasicResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
   /bikes:
     x-swagger-router-controller: bikes
     get:
@@ -68,16 +68,16 @@ paths:
       security:
         - AccessTokenHeader: []
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/BasicResponse"
+            $ref: '#/definitions/BasicResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
     post:
       description: Adds new bike information after validation
       # used as the method name of the controller
@@ -89,42 +89,42 @@ paths:
           description: Bike Object
           in: body
           schema:
-            $ref: "#/definitions/Bike"
+            $ref: '#/definitions/Bike'
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/BasicResponse"
+            $ref: '#/definitions/BasicResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
 
-  /bikes/{bikeId}:
+  /bikes/{bikeIds}:
     x-swagger-router-controller: bikes
     get:
-      operationId: getBikeById
-      summary: Gets bike details by id.
+      operationId: getBikesByIds
+      summary: Gets bike details by ids.
       parameters:
         - in: path
-          name: bikeId
+          name: bikeIds
           type: string
           required: true
           description: Bike Id.
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/BasicResponse"
+            $ref: '#/definitions/BasicResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
-  
+            $ref: '#/definitions/ErrorResponse'
+
   /search/{serial}:
     x-swagger-router-controller: bikes
     get:
@@ -137,16 +137,16 @@ paths:
           required: true
           description: Bike serial number.
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/BasicResponse"
+            $ref: '#/definitions/BasicResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
 # complex objects have schema definitions
 definitions:
   Bike:
