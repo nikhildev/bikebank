@@ -3,7 +3,7 @@ import { User } from '../types/user';
 
 export const setLoginSuccessAction = (user: User, accessToken?: string) => {
   const action = {
-    type: ReduxActionTypes.AUTHENTICATED,
+    type: ReduxActionTypes.Authenticated,
     payload: user,
   };
   return action;
@@ -11,7 +11,7 @@ export const setLoginSuccessAction = (user: User, accessToken?: string) => {
 
 export const setLogoutSuccessAction = () => {
   return {
-    type: ReduxActionTypes.UNAUTHENTICATED,
+    type: ReduxActionTypes.Unauthenticated,
     payload: false,
   };
 };

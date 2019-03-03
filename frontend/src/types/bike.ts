@@ -25,17 +25,9 @@ export const BIKE_STATUS_LABELS = {
   3: 'REPORTED SOLD',
 };
 
-export const fakeData: IBike[] = [
-  {
-    id: '1',
-    serial: '123',
-    status: 1,
-    ownerId: '111',
-    purchaseDate: '111',
-    make: 'Scott',
-    model: 'Navajo',
-    color: 'Black',
-    description: 'Very nice bike',
-    accessories: 'Mobile pouch',
-  },
-];
+export interface IBikeDispatchProps {
+  isFetching: boolean;
+  lastUpdated?: number;
+  items: string[];
+  hasError?: Boolean;
+}

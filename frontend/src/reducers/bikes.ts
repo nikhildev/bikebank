@@ -1,12 +1,46 @@
 import { ReduxActionTypes } from '../types/redux';
 import { AnyAction } from 'redux';
+import { IBikeDispatchProps } from 'src/types/bike';
 
 // import { Bike } from '../types/bike';
+export const INITIAL_STATE: IBikeDispatchProps = {
+  isFetching: false,
+  lastUpdated: 0,
+  items: [],
+  hasError: false,
+};
 
-export default function(state: string[] = [], action: AnyAction): any {
+export default function(
+  state: typeof INITIAL_STATE = INITIAL_STATE,
+  action: AnyAction,
+): any {
   switch (action.type) {
-    case ReduxActionTypes.ADD_USER_BIKES:
-      state = action.payload;
+    case ReduxActionTypes.UserBikesLoading:
+      state = {
+        ...state,
+        isFetching: true,
+        hasError: false,
+      };
+      return state;
+      break;
+    case ReduxActionTypes.UserBikesSuccess:
+      state = {
+        ...state,
+        isFetching: false,
+        lastUpdated: Date.now(),
+        items: action.payload,
+        hasError: false,
+      };
+      return state;
+      break;
+    case ReduxActionTypes.UserBikesError:
+      state = {
+        ...state,
+        isFetching: false,
+        lastUpdated: Date.now(),
+        items: [],
+        hasError: true,
+      };
       return state;
       break;
     default:

@@ -7,10 +7,10 @@ export default function(
   action: IReduxAction,
 ): User | null {
   switch (action.type) {
-    case ReduxActionTypes.AUTHENTICATED:
+    case ReduxActionTypes.Authenticated:
       return action.payload;
       break;
-    case ReduxActionTypes.UNAUTHENTICATED:
+    case ReduxActionTypes.Unauthenticated:
       return null;
       break;
     default:

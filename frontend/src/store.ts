@@ -1,4 +1,3 @@
-// import { createLogger } from 'redux-logger';
 // import * as promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import { createStore, compose, applyMiddleware } from 'redux';
@@ -13,10 +12,10 @@ export default function configureStore(preloadedState?: any) {
     createRootReducer(history),
     preloadedState,
     compose(
+      applyMiddleware(routerMiddleware(history), thunk),
       // tslint:disable-next-line:no-string-literal
       window['__REDUX_DEVTOOLS_EXTENSION__'] &&
         window['__REDUX_DEVTOOLS_EXTENSION__'](),
-      applyMiddleware(thunk, routerMiddleware(history)),
     ),
   );
 
