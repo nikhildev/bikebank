@@ -8,7 +8,6 @@ import Protected from './components/Protected';
 
 const AppRoutes: React.FunctionComponent = () => (
   <Switch>
-    {/* <Route path="/search" component={SearchPage} /> */}
     <Route path="/search/:bikeId" component={SearchPage} />
     <Route path="/search" component={SearchPage} />
     <Route exact={true} path="/dashboard/register">
