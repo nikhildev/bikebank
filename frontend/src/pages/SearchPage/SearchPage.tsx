@@ -22,12 +22,12 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
     error: null,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     if (
       this.props['match'].params.bikeId &&
       this.props['match'].params.bikeId.length
     ) {
-      this.handleSearchSubmit(this.props['match'].params.bikeId);
+      await this.handleSearchSubmit(this.props['match'].params.bikeId);
     }
   }
 
@@ -49,12 +49,12 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
     }
   };
 
-  public handleSearchSubmit = (bin: string) => {
+  public handleSearchSubmit = async (bin: string) => {
     this.setState({
       requestStatus: RequestStatus.Started,
       searchSerial: bin,
     });
-    this.searchBike(bin);
+    await this.searchBike(bin);
   };
 
   public render() {
