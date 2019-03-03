@@ -2,7 +2,6 @@ import { ReduxActionTypes } from '../types/redux';
 import { AnyAction } from 'redux';
 import { IBikeDispatchProps } from 'src/types/bike';
 
-// import { Bike } from '../types/bike';
 export const INITIAL_STATE: IBikeDispatchProps = {
   isFetching: false,
   lastUpdated: 0,
