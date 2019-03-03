@@ -75,11 +75,9 @@ async function create(req, res) {
   }
 
   const bikes = userSnapshot.data().bikes || [];
-  const filteredBikes = bikes.filter(
-    bike => bike.serial === bikeValidationResult.bikeObject.serial,
-  );
+  const foundBike = bikes.find(bike => bike.serial === bikeValidationResult.bikeObject.serial);
 
-  if (filteredBikes.length) {
+  if (foundBike) {
     res.status(409).json({
       message: 'Bike already exists in user profile',
     });
@@ -175,6 +173,7 @@ async function fetchBikesDetails(bikeIds) {
 async function getBikesByIds(req, res) {
   const bikeIdString = req.swagger.params.bikeIds.value || '';
   let bikeIds = bikeIdString.split(',');
+  let bikes;
 
   if (!bikeIds.length) {
     res.status(400).json({
@@ -182,7 +181,14 @@ async function getBikesByIds(req, res) {
     });
   }
 
-  const bikes = await fetchBikesDetails(bikeIds);
+  try {
+    bikes = await fetchBikesDetails(bikeIds);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({
+      message: error.message,
+    });
+  }
 
   if (bikes.length === 1) {
     bikes = bikes[0];

@@ -107,6 +107,8 @@ paths:
     get:
       operationId: getBikesByIds
       summary: Gets bike details by ids.
+      security:
+        - AccessTokenHeader: []
       parameters:
         - in: path
           name: bikeIds
