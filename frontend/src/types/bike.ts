@@ -1,14 +1,17 @@
+import { ILatLongLocation } from './common';
 export interface IBike {
   id: string;
   serial: string;
   status: number;
   ownerId?: string;
   purchaseDate?: string;
+  registrationDate?: string;
   make?: string;
   model?: string;
   color?: string;
   description?: string;
   accessories?: string;
+  lastSeenLocation?: ILatLongLocation;
 }
 
 export enum BikeStatus {
