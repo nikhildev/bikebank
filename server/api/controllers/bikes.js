@@ -57,7 +57,8 @@ async function create(req, res) {
         message: `Bike already registered`,
       });
     }
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: 'An unknown error has occurred',
     });
@@ -68,7 +69,8 @@ async function create(req, res) {
   // Get user information
   try {
     userSnapshot = await userRef.get();
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: 'An error occurred fetching the user information',
     });
@@ -86,7 +88,8 @@ async function create(req, res) {
   // Insert new bike info into Bikes collection
   try {
     const newBikeSnapshot = await Bikes.doc(newBikeId).set(bikeObject);
-  } catch {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({
       message: 'An error occurred while saving the new bike information',
     });
