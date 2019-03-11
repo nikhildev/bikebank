@@ -4,11 +4,6 @@ import { IUser } from '../types/user';
 import { store } from 'src';
 import { receivedUserProfile } from 'src/actions/user';
 
-export interface IFirebaseTokens {
-  accessToken?: string;
-  idToken?: string;
-}
-
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',
   authDomain: 'bike-bank.firebaseapp.com',
