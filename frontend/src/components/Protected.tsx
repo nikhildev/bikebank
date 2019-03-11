@@ -2,20 +2,16 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { login } from '../lib/firebase';
-import { User } from '../types/user';
+import { IUserDispatchProps } from '../types/user';
 import * as signinImage from '../assets/images/signin_with_google.png';
 
 interface IMappedStateProps {
-  user: User | boolean;
+  user: IUserDispatchProps;
 }
 
 class Protected extends React.Component<IMappedStateProps> {
-  constructor(props: IMappedStateProps) {
-    super(props);
-  }
-
   public render() {
-    if (this.props.user) {
+    if (this.props.user.user) {
       return <main>{this.props.children}</main>;
     } else {
       return (

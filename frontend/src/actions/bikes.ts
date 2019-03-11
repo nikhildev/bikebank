@@ -1,6 +1,5 @@
 import { ReduxActionTypes } from '../types/redux';
 import { getAxiosInstance } from 'src/lib/axios';
-import { AxiosResponse, AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
 export function loadingBikes() {
@@ -29,21 +28,18 @@ export function errorReceivingBikes() {
 }
 
 export function requestBikesForUser(refresh?: boolean) {
-  return (dispatch: Dispatch, getState: any) => {
+  return async (dispatch: Dispatch, getState: any) => {
     if (refresh) {
       dispatch(resetBikes());
     }
 
     dispatch(loadingBikes());
-
-    getAxiosInstance()
-      .get('/bikes')
-      .then((bikes: AxiosResponse<string[]>) => {
-        dispatch(receivedBikes(bikes.data));
-      })
-      .catch((error: AxiosError) => {
-        console.error(error);
-        dispatch(errorReceivingBikes());
-      });
+    try {
+      const bikes = await getAxiosInstance().get('/bikes');
+      dispatch(receivedBikes(bikes.data));
+    } catch (error) {
+      console.error(error);
+      dispatch(errorReceivingBikes());
+    }
   };
 }

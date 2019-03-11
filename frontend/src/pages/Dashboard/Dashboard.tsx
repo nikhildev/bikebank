@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { User } from '../../types/user';
+import { IUser } from '../../types/user';
 import { requestBikesForUser } from '../../actions/bikes';
 import { IBikeDispatchProps } from 'src/types/bike';
 import SearchResultCard from '../../components/SearchResult/Card';
@@ -13,7 +13,7 @@ interface IState {
 }
 
 interface IMappedStateProps {
-  user?: User;
+  user?: IUser;
   ownProps?: any;
   bikes: IBikeDispatchProps;
 }

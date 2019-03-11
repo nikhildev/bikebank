@@ -12,7 +12,7 @@ export const INITIAL_STATE: IBikeDispatchProps = {
 export default function(
   state: typeof INITIAL_STATE = INITIAL_STATE,
   action: AnyAction,
-): any {
+): IBikeDispatchProps {
   switch (action.type) {
     case ReduxActionTypes.ResetUserBikes:
       state = INITIAL_STATE;

@@ -1,11 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { auth } from 'firebase';
-import { store } from '../index';
-import { User } from '../types/user';
-import {
-  setLoginSuccessAction,
-  setLogoutSuccessAction,
-} from '../actions/index';
+import { IUser } from '../types/user';
 
 export interface IFirebaseTokens {
   accessToken?: string;
@@ -21,119 +16,26 @@ const config = {
   messagingSenderId: '60251799587',
 };
 
-const firebaseApp = initializeApp(config);
+export const firebaseApp = initializeApp(config);
+export const googleAuthProvider = new auth.GoogleAuthProvider();
+export let currentUser: firebase.User | null;
 
-const provider = new auth.GoogleAuthProvider();
-
-export const login = async (): Promise<User | null | void> => {
-  return auth(firebaseApp)
-    .signInWithPopup(provider)
-    .then(res => {
-      const currentUser = auth(firebaseApp).currentUser;
-
-      if (currentUser !== null) {
-        currentUser
-          .getIdToken(true)
-          .then(token => {
-            window.localStorage.setItem(
-              'bikebankTokens',
-              JSON.stringify({
-                idToken: token,
-              }),
-            );
-
-            const user: User = {
-              uid: currentUser.uid,
-              displayName: currentUser.displayName,
-              email: currentUser.email,
-              photoUrl: currentUser.photoURL,
-            };
-
-            window.localStorage.setItem('bikebankUser', JSON.stringify(user));
-            store.dispatch(setLoginSuccessAction(user));
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      return Promise.reject(null);
-    });
-};
-
-export function getLoggedInUser(): User | null {
-  if (window.localStorage && window.localStorage.getItem('bikebankUser')) {
-    return JSON.parse(window.localStorage.getItem('bikebankUser') || '');
-  } else {
-    return null;
-  }
+export async function login(): Promise<IUser | null | void> {
+  await auth(firebaseApp).signInWithPopup(googleAuthProvider);
+  currentUser = auth(firebaseApp).currentUser;
 }
 
-export function getTokens(): IFirebaseTokens {
-  if (
-    window.localStorage &&
-    typeof window.localStorage.getItem('bikebankTokens')
-  ) {
+export async function getIdToken(
+  user: firebase.User | null,
+): Promise<string | null> {
+  if (user !== null) {
     try {
-      const tokens = JSON.parse(
-        window.localStorage.getItem('bikebankTokens') || '',
-      );
-      return tokens;
+      const token = await user.getIdToken(true);
+      return token;
     } catch (error) {
-      return {};
-    }
-  } else {
-    return {};
-  }
-}
-
-export const logout = async (): Promise<any> => {
-  return auth()
-    .signOut()
-    .then(res => {
-      window.localStorage.removeItem('bikebankUser');
-      window.localStorage.removeItem('bikebankTokens');
-      store.dispatch(setLogoutSuccessAction());
-    })
-    .catch(error => {
       console.error(error);
-    });
-};
-
-export interface IFirebaseDocument {
-  fields: any;
-}
-
-function transformFields(fields: object) {
-  const data = {};
-
-  Object.keys(fields).map(field => {
-    // tslint:disable-next-line:no-string-literal
-    data[field] = Object['values'](fields[field])[0];
-  });
-
-  return data;
-}
-
-export const transformRestData = (response: any) => {
-  let data: any;
-
-  if (response.data.documents) {
-    data = [];
-    response.data.documents.forEach((document: IFirebaseDocument) => {
-      const newDoc = transformFields(document.fields);
-      data.push(newDoc);
-    });
-  } else {
-    data = response.data;
+      return null;
+    }
   }
-
-  const transformedData = {
-    data,
-    headers: response.headers,
-    status: response.status,
-  };
-  return transformedData;
-};
+  return null;
+}

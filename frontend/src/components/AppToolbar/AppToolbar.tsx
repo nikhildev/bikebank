@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,29 +9,31 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Avatar from '@material-ui/core/Avatar';
 
 import './AppToolbar.css';
-import { User } from '../../types/user';
-import { login, logout } from '../../lib/firebase';
+import { IUserDispatchProps } from '../../types/user';
+import { requestUserLogin, requestUserLogout } from 'src/actions/user';
 
 interface IProps {
   appTitle: string;
-  user: User;
 }
 
-interface IState {
-  user: User;
+interface IMappedDispatchProps {
+  requestUserLogin: Function;
+  requestUserLogout: Function;
 }
 
-class AppToolbar extends React.Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+interface IMappedStateProps {
+  user: IUserDispatchProps;
+}
 
+class AppToolbar extends React.Component<
+  IMappedDispatchProps & IMappedStateProps & IProps
+> {
   private handleLoginClick = async () => {
-    await login();
+    this.props.requestUserLogin();
   };
 
   private handleLogoutClick = async () => {
-    await logout();
+    this.props.requestUserLogout();
   };
 
   public render() {
@@ -46,9 +47,12 @@ class AppToolbar extends React.Component<IProps> {
             <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
               Bike Bank
             </Typography>
-            {this.props.user ? (
+            {this.props.user.user ? (
               <div onClick={this.handleLogoutClick}>
-                <Avatar alt="User Name" src={this.props.user.photoUrl || ''} />
+                <Avatar
+                  alt="User Name"
+                  src={this.props.user.user.photoUrl || ''}
+                />
                 {/* <Avatar user={this.props.user} /> */}
               </div>
             ) : (
@@ -65,13 +69,18 @@ class AppToolbar extends React.Component<IProps> {
   }
 }
 
-function mapStateToProps(state: IState): IState {
+function mapStateToProps(state: IMappedStateProps): IMappedStateProps {
   return {
     user: state.user || false,
   };
 }
 
-export default connect<IState>(
+const mapDispatchToProps: IMappedDispatchProps = {
+  requestUserLogin,
+  requestUserLogout,
+};
+
+export default connect<IMappedStateProps, IMappedDispatchProps>(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
 )(AppToolbar);

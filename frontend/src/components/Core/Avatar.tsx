@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { User } from '../../types/user';
+import { IUser } from '../../types/user';
 
 interface IProps {
-  user: User,
+  user: IUser;
 }
 
-const Avatar: React.FunctionComponent<IProps> = (props) => {
+const Avatar: React.FunctionComponent<IProps> = props => {
   const photoUrl: string = props.user.photoUrl || '';
   const displayName: string = props.user.displayName || '';
 
@@ -15,7 +15,8 @@ const Avatar: React.FunctionComponent<IProps> = (props) => {
       style={{
         display: 'flex',
         alignItems: 'center',
-      }}>
+      }}
+    >
       <img
         style={{
           height: 32,
@@ -23,16 +24,20 @@ const Avatar: React.FunctionComponent<IProps> = (props) => {
           borderRadius: '50%',
         }}
         src={photoUrl}
-        alt={photoUrl} />
-      <label style={{
-        fontSize: 13,
-        fontWeight: 600,
-        color: 'white',
-        marginLeft: 8,
-      }}>{displayName}</label>
+        alt={photoUrl}
+      />
+      <label
+        style={{
+          fontSize: 13,
+          fontWeight: 600,
+          color: 'white',
+          marginLeft: 8,
+        }}
+      >
+        {displayName}
+      </label>
     </div>
-  )
-
-}
+  );
+};
 
 export default Avatar;
