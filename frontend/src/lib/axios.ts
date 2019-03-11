@@ -1,7 +1,5 @@
 import * as axios from 'axios';
-import { currentUser, getIdToken } from '../lib/firebase';
-// import { store } from '../index';
-// import { setLogoutSuccessAction } from 'src/actions';
+import { getIdToken } from '../lib/firebase';
 
 export enum AxiosErrors {
   Unknown = 'UNKNOWN',
@@ -10,23 +8,14 @@ export enum AxiosErrors {
 
 export const getAxiosInstance = () => {
   const axiosInstance = axios.default.create();
-  axiosInstance.defaults.headers.common['X-ID-Token'] = getIdToken(currentUser);
-  // axiosInstance.interceptors.response.use(
-  //   res => res,
-  //   (error: axios.AxiosError) => {
-  //     let axiosError = AxiosErrors.Unknown;
-  //     if (error.response) {
-  //       switch (error.response.status) {
-  //         case 401:
-  //           axiosError = AxiosErrors.Unauthorized;
-  //           store.dispatch(setLogoutSuccessAction());
-  //           break;
-  //         default:
-  //           axiosError = AxiosErrors.Unknown;
-  //       }
-  //     }
-  //     return Promise.reject(axiosError);
-  //   },
-  // );
+  axiosInstance.interceptors.request.use(
+    async options => {
+      options.headers['X-ID-Token'] = await getIdToken();
+      return options;
+    },
+    error => {
+      console.error(error);
+    },
+  );
   return axiosInstance;
 };

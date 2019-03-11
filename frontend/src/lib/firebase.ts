@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { auth } from 'firebase';
 import { IUser } from '../types/user';
+import { store } from 'src';
+import { receivedUserProfile } from 'src/actions/user';
 
 export interface IFirebaseTokens {
   accessToken?: string;
@@ -25,12 +27,24 @@ export async function login(): Promise<IUser | null | void> {
   currentUser = auth(firebaseApp).currentUser;
 }
 
-export async function getIdToken(
-  user: firebase.User | null,
-): Promise<string | null> {
-  if (user !== null) {
+auth().onAuthStateChanged(async user => {
+  if (user) {
+    const userProfile = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      photoUrl: user.photoURL,
+    };
+
+    currentUser = user;
+    store.dispatch(receivedUserProfile(userProfile));
+  }
+});
+
+export async function getIdToken(): Promise<string | null> {
+  if (currentUser !== null) {
     try {
-      const token = await user.getIdToken(true);
+      const token = await currentUser.getIdToken(true);
       return token;
     } catch (error) {
       console.error(error);
