@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { requestBikesForUser } from '../../actions/bikes';
 import { BikeDispatchProps } from 'src/types/bike';
 import SearchResultCard from '../../components/SearchResult/Card';
+import { UserDispatchProps } from 'src/types/user';
 
 // These Will be received through redux store
 interface IState {
@@ -12,7 +13,7 @@ interface IState {
 }
 
 interface MappedStateProps {
-  user: firebase.User | null;
+  user: UserDispatchProps;
   ownProps?: any;
   bikes: BikeDispatchProps;
 }
@@ -43,26 +44,32 @@ class DashboardPage extends React.Component<
           padding: 16,
         }}
       >
-        {this.props.user && <h1>Dashboard - {this.props.user.displayName}</h1>}
-        <Link to="dashboard/register">Register a new bike</Link>
+        {this.props.user && this.props.user.user && (
+          <React.Fragment>
+            <h1>Dashboard - {this.props.user.user.displayName}</h1>
 
-        <button onClick={this.refreshUserBikes}>Refresh</button>
+            <Link to="dashboard/register">Register a new bike</Link>
 
-        {this.props.bikes.isFetching && <h3>Loading your bikes...</h3>}
+            <button onClick={this.refreshUserBikes}>Refresh</button>
 
-        {this.props.bikes && (
-          <div>
-            {this.props.bikes.items.map(bike => {
-              return (
-                <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
-              );
-            })}
-          </div>
-        )}
-        {this.props.bikes.hasError && (
-          <div>
-            Error fetching your bike information. Press refresh to try again.
-          </div>
+            {this.props.bikes.isFetching && <h3>Loading your bikes...</h3>}
+
+            {this.props.bikes && (
+              <div>
+                {this.props.bikes.items.map(bike => {
+                  return (
+                    <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
+                  );
+                })}
+              </div>
+            )}
+            {this.props.bikes.hasError && (
+              <div>
+                Error fetching your bike information. Press refresh to try
+                again.
+              </div>
+            )}
+          </React.Fragment>
         )}
       </main>
     );
