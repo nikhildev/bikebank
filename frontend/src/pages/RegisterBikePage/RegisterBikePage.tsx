@@ -1,14 +1,14 @@
 import { FormikProps, FormikErrors, withFormik, Form, Field } from 'formik';
 import * as React from 'react';
 
-import { IBike, BikeStatus } from '../../types/bike';
+import { Bike, BikeStatus } from '../../types/bike';
 
 interface IState {
-  form: IBike;
+  form: Bike;
   error: any;
 }
 
-const INNER_FORM = (props: FormikProps<IBike>) => {
+const INNER_FORM = (props: FormikProps<Bike>) => {
   const { touched, errors, isSubmitting } = props;
 
   return (
@@ -26,7 +26,7 @@ const INNER_FORM = (props: FormikProps<IBike>) => {
   );
 };
 
-const RegisterForm = withFormik<IBike, IBike>({
+const RegisterForm = withFormik<Bike, Bike>({
   // Transform outer props into form values
   mapPropsToValues: props => {
     return {
@@ -44,8 +44,8 @@ const RegisterForm = withFormik<IBike, IBike>({
   },
 
   // Add a custom validation function (this can be async too!)
-  validate: (values: IBike) => {
-    let errors: FormikErrors<IBike> = {};
+  validate: (values: Bike) => {
+    let errors: FormikErrors<Bike> = {};
     if (!values.make || !values.make.length) {
       errors.make = 'Required';
     }
@@ -59,7 +59,7 @@ const RegisterForm = withFormik<IBike, IBike>({
   },
 })(INNER_FORM);
 
-const INITIAL_FORM: IBike = {
+const INITIAL_FORM: Bike = {
   accessories: '',
   color: '',
   description: '',
@@ -93,7 +93,7 @@ class RegisterBikePage extends React.Component<{}, IState> {
     );
   }
 
-  public handleSubmit = (values: IBike) => {
+  public handleSubmit = (values: Bike) => {
     console.info(values);
     // setSubmitting(false);
   };

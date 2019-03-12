@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import './Card.css';
-import { BIKE_STATUS_LABELS, IBike } from '../../types/bike';
+import { BIKE_STATUS_LABELS, Bike } from '../../types/bike';
 
 interface IProps {
   key: string;
   id: string;
-  bike: IBike;
+  bike: Bike;
 }
 
 const SearchResultCard = (props: IProps) => {

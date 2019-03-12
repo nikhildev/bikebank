@@ -1,5 +1,5 @@
 import { ILatLongLocation } from './common';
-export interface IBike {
+export interface Bike {
   id: string;
   serial: string;
   status: number;
@@ -28,9 +28,9 @@ export const BIKE_STATUS_LABELS = {
   3: 'REPORTED SOLD',
 };
 
-export interface IBikeDispatchProps {
+export interface BikeDispatchProps {
   isFetching: boolean;
   lastUpdated?: number;
-  items: IBike[];
+  items: Bike[];
   hasError?: Boolean;
 }

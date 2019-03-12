@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { requestBikesForUser } from '../../actions/bikes';
-import { IBikeDispatchProps } from 'src/types/bike';
+import { BikeDispatchProps } from 'src/types/bike';
 import SearchResultCard from '../../components/SearchResult/Card';
 
 // These Will be received through redux store
@@ -14,7 +14,7 @@ interface IState {
 interface MappedStateProps {
   user: firebase.User | null;
   ownProps?: any;
-  bikes: IBikeDispatchProps;
+  bikes: BikeDispatchProps;
 }
 
 interface MappedDispatchProps {

@@ -25,8 +25,6 @@ class Protected extends React.Component<
   };
 
   public render() {
-    console.log(this.props.user);
-
     if (this.props.user.isFetching) {
       return <main>Signing you into your account</main>;
     } else if (this.props.user.user) {

@@ -1,6 +1,7 @@
 import { ReduxActionTypes } from '../types/redux';
-import { getAxiosInstance } from 'src/lib/axios';
 import { Dispatch } from 'redux';
+import { Bike } from 'src/types/bike';
+import { getBikesForUser } from 'src/api/bikes';
 
 export function loadingBikes() {
   return {
@@ -14,7 +15,7 @@ export function resetBikes() {
   };
 }
 
-export function receivedBikes(bikes: string[]) {
+export function receivedBikes(bikes: Bike[]) {
   return {
     type: ReduxActionTypes.UserBikesSuccess,
     payload: bikes,
@@ -35,8 +36,8 @@ export function requestBikesForUser(refresh?: boolean) {
 
     dispatch(loadingBikes());
     try {
-      const bikes = await getAxiosInstance().get('/bikes');
-      dispatch(receivedBikes(bikes.data));
+      const bikes = await getBikesForUser();
+      dispatch(receivedBikes(bikes));
     } catch (error) {
       console.error(error);
       dispatch(errorReceivingBikes());

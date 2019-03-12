@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
-import { IBike } from '../../types/bike';
+import { Bike } from '../../types/bike';
 import { ConnectedRouterProps } from 'connected-react-router';
 import { RequestStatus } from 'src/types/http';
 import { searchBikeByBin } from 'src/api/bikes';
@@ -10,7 +10,7 @@ import { searchBikeByBin } from 'src/api/bikes';
 interface IState {
   requestStatus: RequestStatus;
   searchSerial: string;
-  bikes: IBike[];
+  bikes: Bike[];
   error: any;
 }
 

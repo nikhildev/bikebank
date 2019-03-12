@@ -1,8 +1,8 @@
 import { ReduxActionTypes } from '../types/redux';
 import { AnyAction } from 'redux';
-import { IBikeDispatchProps } from 'src/types/bike';
+import { BikeDispatchProps } from 'src/types/bike';
 
-export const INITIAL_STATE: IBikeDispatchProps = {
+export const INITIAL_STATE: BikeDispatchProps = {
   isFetching: false,
   lastUpdated: 0,
   items: [],
@@ -12,7 +12,7 @@ export const INITIAL_STATE: IBikeDispatchProps = {
 export default function(
   state: typeof INITIAL_STATE = INITIAL_STATE,
   action: AnyAction,
-): IBikeDispatchProps {
+): BikeDispatchProps {
   switch (action.type) {
     case ReduxActionTypes.ResetUserBikes:
       state = INITIAL_STATE;
