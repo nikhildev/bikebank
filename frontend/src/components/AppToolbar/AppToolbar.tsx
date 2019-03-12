@@ -9,24 +9,24 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Avatar from '@material-ui/core/Avatar';
 
 import './AppToolbar.css';
-import { IUserDispatchProps } from '../../types/user';
+import { UserDispatchProps } from '../../types/user';
 import { requestUserLogin, requestUserLogout } from 'src/actions/user';
 
 interface IProps {
   appTitle: string;
 }
 
-interface IMappedDispatchProps {
+interface MappedDispatchProps {
   requestUserLogin: Function;
   requestUserLogout: Function;
 }
 
-interface IMappedStateProps {
-  user: IUserDispatchProps;
+interface MappedStateProps {
+  user: UserDispatchProps;
 }
 
 class AppToolbar extends React.Component<
-  IMappedDispatchProps & IMappedStateProps & IProps
+  MappedDispatchProps & MappedStateProps & IProps
 > {
   private handleLoginClick = async () => {
     this.props.requestUserLogin();
@@ -51,14 +51,12 @@ class AppToolbar extends React.Component<
               <div onClick={this.handleLogoutClick}>
                 <Avatar
                   alt="User Name"
-                  src={this.props.user.user.photoUrl || ''}
+                  src={this.props.user.user.photoURL || ''}
                 />
-                {/* <Avatar user={this.props.user} /> */}
               </div>
             ) : (
-              // <button onClick={this.handleLoginClick}>Login</button>
               <Button onClick={this.handleLoginClick} color="inherit">
-                Login
+                Login with Google
               </Button>
             )}
           </Toolbar>
@@ -69,18 +67,18 @@ class AppToolbar extends React.Component<
   }
 }
 
-function mapStateToProps(state: IMappedStateProps): IMappedStateProps {
+function mapStateToProps(state: MappedStateProps): MappedStateProps {
   return {
     user: state.user || false,
   };
 }
 
-const mapDispatchToProps: IMappedDispatchProps = {
+const mapDispatchToProps: MappedDispatchProps = {
   requestUserLogin,
   requestUserLogout,
 };
 
-export default connect<IMappedStateProps, IMappedDispatchProps>(
+export default connect<MappedStateProps, MappedDispatchProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(AppToolbar);

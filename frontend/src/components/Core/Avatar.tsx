@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IUser } from '../../types/user';
+import { User } from '../../types/user';
 
 interface IProps {
-  user: IUser;
+  user: User;
 }
 
 const Avatar: React.FunctionComponent<IProps> = props => {

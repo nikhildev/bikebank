@@ -1,17 +1,35 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { login } from '../lib/firebase';
-import { IUserDispatchProps } from '../types/user';
+import { UserDispatchProps } from '../types/user';
 import * as signinImage from '../assets/images/signin_with_google.png';
+import { requestUserLogin, AuthProvider } from 'src/actions/user';
 
-interface IMappedStateProps {
-  user: IUserDispatchProps;
+interface MappedDispatchProps {
+  requestUserLogin: Function;
 }
 
-class Protected extends React.Component<IMappedStateProps> {
+interface MappedStateProps {
+  user: UserDispatchProps;
+}
+
+class Protected extends React.Component<
+  MappedStateProps & MappedDispatchProps
+> {
+  handleGoogleLoginClick = () => {
+    this.props.requestUserLogin(AuthProvider.Google);
+  };
+
+  handleFacebookLoginClick = () => {
+    this.props.requestUserLogin(AuthProvider.Facebook);
+  };
+
   public render() {
-    if (this.props.user.user) {
+    console.log(this.props.user);
+
+    if (this.props.user.isFetching) {
+      return <main>Signing you into your account</main>;
+    } else if (this.props.user.user) {
       return <main>{this.props.children}</main>;
     } else {
       return (
@@ -20,21 +38,35 @@ class Protected extends React.Component<IMappedStateProps> {
             textAlign: 'center',
           }}
         >
-          <h1>You need to login to access your dashboard</h1>
-          <img src={signinImage} alt="" height="52" onClick={login} />
+          <h1>Please login to access your dashboard</h1>
+          <img
+            src={signinImage}
+            alt=""
+            height="52"
+            onClick={this.handleGoogleLoginClick}
+          />
+          <img
+            src="https://i.stack.imgur.com/Vk9SO.png"
+            alt="Login with Facebook"
+            onClick={this.handleFacebookLoginClick}
+          />
         </main>
       );
     }
   }
 }
 
-function mapStateToProps(state: IMappedStateProps): IMappedStateProps {
+function mapStateToProps(state: MappedStateProps): MappedStateProps {
   return {
     user: state.user || false,
   };
 }
 
-export default connect<IMappedStateProps>(
+const mapDispatchToProps: MappedDispatchProps = {
+  requestUserLogin,
+};
+
+export default connect<MappedStateProps, MappedDispatchProps>(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
 )(Protected);

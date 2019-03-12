@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { auth } from 'firebase';
-import { IUser } from '../types/user';
 import { store } from 'src';
 import { receivedUserProfile } from 'src/actions/user';
 
@@ -15,35 +14,23 @@ const config = {
 
 export const firebaseApp = initializeApp(config);
 export const googleAuthProvider = new auth.GoogleAuthProvider();
-export let currentUser: firebase.User | null;
+export const facebookAuthProvider = new auth.FacebookAuthProvider();
+export const twitterAuthProvider = new auth.TwitterAuthProvider();
 
-export async function login(): Promise<IUser | null | void> {
-  await auth(firebaseApp).signInWithPopup(googleAuthProvider);
-  currentUser = auth(firebaseApp).currentUser;
-}
-
-auth().onAuthStateChanged(async user => {
-  if (user) {
-    const userProfile = {
-      uid: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-      photoUrl: user.photoURL,
-    };
-
-    currentUser = user;
-    store.dispatch(receivedUserProfile(userProfile));
+auth().onAuthStateChanged(async (user: firebase.User | null) => {
+  if (user !== null) {
+    store.dispatch(receivedUserProfile(user));
   }
 });
 
 export async function getIdToken(): Promise<string | null> {
+  const currentUser = auth(firebaseApp).currentUser;
   if (currentUser !== null) {
     try {
       const token = await currentUser.getIdToken(true);
       return token;
     } catch (error) {
       console.error(error);
-      return null;
     }
   }
   return null;
