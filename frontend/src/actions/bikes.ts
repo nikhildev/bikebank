@@ -30,17 +30,18 @@ export function errorReceivingBikes() {
 
 export function requestBikesForUser(refresh?: boolean) {
   return async (dispatch: Dispatch, getState: any) => {
-    if (refresh) {
-      dispatch(resetBikes());
-    }
-
-    dispatch(loadingBikes());
-    try {
-      const bikes = await getBikesForUser();
-      dispatch(receivedBikes(bikes));
-    } catch (error) {
-      console.error(error);
-      dispatch(errorReceivingBikes());
+    if (!getState().bikes.isFetching) {
+      if (refresh) {
+        dispatch(resetBikes());
+      }
+      dispatch(loadingBikes());
+      try {
+        const bikes = await getBikesForUser();
+        dispatch(receivedBikes(bikes));
+      } catch (error) {
+        console.error(error);
+        dispatch(errorReceivingBikes());
+      }
     }
   };
 }
