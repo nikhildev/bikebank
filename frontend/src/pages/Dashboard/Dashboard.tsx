@@ -11,23 +11,19 @@ interface IState {
   error?: any;
 }
 
-interface IMappedStateProps {
-  user?: firebase.User;
+interface MappedStateProps {
+  user: firebase.User | null;
   ownProps?: any;
   bikes: IBikeDispatchProps;
 }
 
-interface IMappedDispatchProps {
+interface MappedDispatchProps {
   requestBikesForUser: Function;
 }
 
 class DashboardPage extends React.Component<
-  IMappedStateProps & IMappedDispatchProps & IState
+  MappedStateProps & MappedDispatchProps & IState
 > {
-  readonly state: IState = {
-    error: false,
-  };
-
   componentDidMount() {
     if (!this.props.bikes.lastUpdated) {
       this.props.requestBikesForUser();
@@ -63,13 +59,17 @@ class DashboardPage extends React.Component<
             })}
           </div>
         )}
-        {this.state.error && <div>Error fetching your bike information</div>}
+        {this.props.bikes.hasError && (
+          <div>
+            Error fetching your bike information. Press refresh to try again.
+          </div>
+        )}
       </main>
     );
   }
 }
 
-const mapStateToProps = (state: IMappedStateProps): IMappedStateProps => {
+const mapStateToProps = (state: MappedStateProps): MappedStateProps => {
   return {
     user: state.user,
     ownProps: state.ownProps,
@@ -77,11 +77,11 @@ const mapStateToProps = (state: IMappedStateProps): IMappedStateProps => {
   };
 };
 
-const mapDispatchToProps: IMappedDispatchProps = {
+const mapDispatchToProps: MappedDispatchProps = {
   requestBikesForUser,
 };
 
-export default connect<IMappedStateProps, IMappedDispatchProps>(
+export default connect<MappedStateProps, MappedDispatchProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(DashboardPage);
