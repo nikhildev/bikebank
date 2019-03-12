@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { User } from '../../types/user';
 
 interface IProps {
-  user: User;
+  user: firebase.User;
 }
 
 const Avatar: React.FunctionComponent<IProps> = props => {
-  const photoUrl: string = props.user.photoUrl || '';
+  const photoUrl: string = props.user.photoURL || '';
   const displayName: string = props.user.displayName || '';
 
   return (
