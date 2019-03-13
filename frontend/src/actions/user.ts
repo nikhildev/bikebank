@@ -7,6 +7,7 @@ import {
   facebookAuthProvider,
   twitterAuthProvider,
 } from 'src/lib/firebase';
+import { ping } from 'src/api/user';
 
 export enum AuthProvider {
   Google,
@@ -58,12 +59,16 @@ export function requestUserLogin(provider: AuthProvider) {
           await auth(firebaseApp).signInWithPopup(googleAuthProvider);
       }
 
+      try {
+        await ping();
+      } catch (error) {
+        console.error('Error pinging user endpoint');
+      }
+
       const currentUser = auth(firebaseApp).currentUser;
 
       if (currentUser && currentUser.email) {
-        const signinMethods = await auth(
-          firebaseApp,
-        ).fetchSignInMethodsForEmail(currentUser.email);
+        const signinMethods = await auth(firebaseApp).fetchSignInMethodsForEmail(currentUser.email);
         console.info('signinMethods', signinMethods);
         dispatch(receivedUserProfile(currentUser));
       }
@@ -73,9 +78,7 @@ export function requestUserLogin(provider: AuthProvider) {
       if (error.code === 'auth/account-exists-with-different-credential') {
         const pendingCred = error.credential;
         const email = error.email;
-        const signinMethods = await auth(
-          firebaseApp,
-        ).fetchSignInMethodsForEmail(email);
+        const signinMethods = await auth(firebaseApp).fetchSignInMethodsForEmail(email);
 
         alert(
           'We found that you signed in with this email using Google. We will now try to link these accounts',
@@ -85,14 +88,10 @@ export function requestUserLogin(provider: AuthProvider) {
 
         switch (signinMethods[0]) {
           case 'google.com':
-            signInResult = await auth(firebaseApp).signInWithPopup(
-              googleAuthProvider,
-            );
+            signInResult = await auth(firebaseApp).signInWithPopup(googleAuthProvider);
             break;
           case 'facebook.com':
-            signInResult = await auth(firebaseApp).signInWithPopup(
-              facebookAuthProvider,
-            );
+            signInResult = await auth(firebaseApp).signInWithPopup(facebookAuthProvider);
             break;
           default:
             signInResult = null;
