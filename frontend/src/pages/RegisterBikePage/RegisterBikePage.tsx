@@ -1,82 +1,20 @@
-import { FormikProps, FormikErrors, withFormik, Form } from 'formik';
+import { FormikProps, Formik, FormikActions } from 'formik';
 import * as React from 'react';
 import { Paper, TextField } from '@material-ui/core';
 
-import { Bike, BikeStatus } from '../../types/bike';
+import { Bike, BikeStatus, BIKE_VALIDATION_SCHEMA } from '../../types/bike';
 
 interface IState {
   form: Bike;
   error: any;
 }
 
-const INNER_FORM = (props: FormikProps<Bike>) => {
-  const { touched, errors, isSubmitting, handleChange } = props;
-
-  return (
-    <Form style={{ display: 'flex', flexDirection: 'column' }}>
-      {/* Make */}
-      <TextField
-        id="make"
-        name="make"
-        error={touched.make && errors.make ? true : false}
-        label="Make(required)"
-        margin="normal"
-        variant="outlined"
-        onChange={handleChange}
-      />
-      {/* Model */}
-      <TextField
-        id="model"
-        name="model"
-        label="Model"
-        margin="normal"
-        variant="outlined"
-        onChange={handleChange}
-      />
-      <button type="submit" disabled={isSubmitting}>
-        Submit
-      </button>
-    </Form>
-  );
-};
-
-const RegisterForm = withFormik<Bike, Bike>({
-  // Transform outer props into form values
-  mapPropsToValues: (props) => {
-    return {
-      accessories: props.accessories || '',
-      color: props.color || '',
-      description: props.description || '',
-      id: props.id || '',
-      make: props.make || '',
-      model: props.model || '',
-      ownerId: props.ownerId || '',
-      purchaseDate: props.purchaseDate || '',
-      serial: props.serial || '',
-      status: props.status || BikeStatus.InPossession,
-    };
-  },
-
-  // Add a custom validation function (this can be async too!)
-  validate: (values: Bike) => {
-    let errors: FormikErrors<Bike> = {};
-    errors.make = !values.make || !values.make.length ? 'Required' : undefined;
-    return errors;
-  },
-
-  handleSubmit: (values) => {
-    console.log(values);
-
-    // do submitting things
-  },
-})(INNER_FORM);
-
 const INITIAL_FORM: Bike = {
   accessories: '',
   color: '',
   description: '',
   id: '',
-  make: 'test',
+  make: '',
   model: '',
   ownerId: '',
   purchaseDate: '',
@@ -90,6 +28,60 @@ class RegisterBikePage extends React.Component<{}, IState> {
     form: INITIAL_FORM,
   };
 
+  private handleSubmit = (values: Bike, actions: FormikActions<Bike>) => {
+    console.log('values, actions', values, actions);
+  };
+
+  private createFormikForm = (props: FormikProps<Bike>) => {
+    console.log(props);
+    return (
+      <form onSubmit={props.handleSubmit}>
+        <TextField
+          id="serial"
+          name="serial"
+          error={props.touched.serial && props.errors.serial ? true : false}
+          label={props.errors.serial || 'Serial(required)'}
+          margin="normal"
+          variant="outlined"
+          value={props.values.serial}
+          onChange={props.handleChange}
+        />
+        <TextField
+          id="make"
+          name="make"
+          error={props.touched.make && props.errors.make ? true : false}
+          label={props.errors.make || 'Make(required)'}
+          margin="normal"
+          variant="outlined"
+          value={props.values.make}
+          onChange={props.handleChange}
+        />
+        <TextField
+          id="purchaseDate"
+          type="date"
+          error={props.touched.purchaseDate && props.errors.purchaseDate ? true : false}
+          label={props.errors.purchaseDate || 'Purchase date'}
+          onChange={props.handleChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <button role="submit">Submit</button>
+      </form>
+    );
+  };
+
+  private getRegisterForm = () => {
+    return (
+      <Formik
+        initialValues={this.state.form}
+        onSubmit={this.handleSubmit}
+        render={this.createFormikForm}
+        validationSchema={BIKE_VALIDATION_SCHEMA}
+      />
+    );
+  };
+
   public render() {
     return (
       <main
@@ -101,31 +93,11 @@ class RegisterBikePage extends React.Component<{}, IState> {
       >
         <Paper style={{ padding: 16 }}>
           <h3>Register a new bike</h3>
-          <RegisterForm id="" serial="" status={0} />
+          {this.getRegisterForm()}
         </Paper>
       </main>
     );
   }
-
-  public handleSubmit = (values: Bike) => {
-    console.info(values);
-    // setSubmitting(false);
-  };
-
-  // private validateForm = (values: IBike) => {
-  //   // values => {
-  //   //   let errors = {};
-  //   //   if (!values.email) {
-  //   //     errors.email = 'Required';
-  //   //   } else if (
-  //   //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-  //   //   ) {
-  //   //     errors.email = 'Invalid email address';
-  //   //   }
-  //   //   return errors;
-  //   // }
-  //   // return true;
-  // }
 }
 
 export default RegisterBikePage;
