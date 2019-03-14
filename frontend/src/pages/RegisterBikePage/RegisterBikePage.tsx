@@ -1,5 +1,6 @@
-import { FormikProps, FormikErrors, withFormik, Form, Field } from 'formik';
+import { FormikProps, FormikErrors, withFormik, Form } from 'formik';
 import * as React from 'react';
+import { Paper, TextField } from '@material-ui/core';
 
 import { Bike, BikeStatus } from '../../types/bike';
 
@@ -9,16 +10,29 @@ interface IState {
 }
 
 const INNER_FORM = (props: FormikProps<Bike>) => {
-  const { touched, errors, isSubmitting } = props;
+  const { touched, errors, isSubmitting, handleChange } = props;
 
   return (
     <Form style={{ display: 'flex', flexDirection: 'column' }}>
-      <Field type="input" name="make" />
-      {touched.make && errors.make && <div>{errors.make}</div>}
-
-      <Field type="input" name="model" />
-      {touched.model && errors.model && <div>{errors.model}</div>}
-
+      {/* Make */}
+      <TextField
+        id="make"
+        name="make"
+        error={touched.make && errors.make ? true : false}
+        label="Make(required)"
+        margin="normal"
+        variant="outlined"
+        onChange={handleChange}
+      />
+      {/* Model */}
+      <TextField
+        id="model"
+        name="model"
+        label="Model"
+        margin="normal"
+        variant="outlined"
+        onChange={handleChange}
+      />
       <button type="submit" disabled={isSubmitting}>
         Submit
       </button>
@@ -28,7 +42,7 @@ const INNER_FORM = (props: FormikProps<Bike>) => {
 
 const RegisterForm = withFormik<Bike, Bike>({
   // Transform outer props into form values
-  mapPropsToValues: props => {
+  mapPropsToValues: (props) => {
     return {
       accessories: props.accessories || '',
       color: props.color || '',
@@ -46,13 +60,11 @@ const RegisterForm = withFormik<Bike, Bike>({
   // Add a custom validation function (this can be async too!)
   validate: (values: Bike) => {
     let errors: FormikErrors<Bike> = {};
-    if (!values.make || !values.make.length) {
-      errors.make = 'Required';
-    }
+    errors.make = !values.make || !values.make.length ? 'Required' : undefined;
     return errors;
   },
 
-  handleSubmit: values => {
+  handleSubmit: (values) => {
     console.log(values);
 
     // do submitting things
@@ -87,8 +99,10 @@ class RegisterBikePage extends React.Component<{}, IState> {
           padding: 16,
         }}
       >
-        <h1>Register a new bike</h1>
-        <RegisterForm id="" serial="" status={0} />
+        <Paper style={{ padding: 16 }}>
+          <h3>Register a new bike</h3>
+          <RegisterForm id="" serial="" status={0} />
+        </Paper>
       </main>
     );
   }
