@@ -94,6 +94,36 @@ class RegisterBikePage extends React.Component<{}, IState> {
             ))}
           </NativeSelect>
         </FormControl>
+
+        <TextField
+          id="color"
+          name="color"
+          label="Color"
+          margin="normal"
+          variant="outlined"
+          value={props.values.color}
+          onChange={props.handleChange}
+        />
+
+        <TextField
+          id="description"
+          name="description"
+          label="Description"
+          margin="normal"
+          variant="outlined"
+          value={props.values.description}
+          onChange={props.handleChange}
+        />
+
+        <TextField
+          id="accessories"
+          name="accessories"
+          label="Accessories"
+          margin="normal"
+          variant="outlined"
+          value={props.values.accessories}
+          onChange={props.handleChange}
+        />
         <Button variant="contained" role="submit" type="submit">
           Submit
         </Button>
