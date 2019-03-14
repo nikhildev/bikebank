@@ -23,10 +23,10 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
   };
 
   async componentDidMount() {
-    if (
-      this.props['match'].params.bikeId &&
-      this.props['match'].params.bikeId.length
-    ) {
+    if (this.props['match'].params.bikeId && this.props['match'].params.bikeId.length) {
+      this.setState({
+        searchSerial: this.props['match'].params.bikeId,
+      });
       await this.handleSearchSubmit(this.props['match'].params.bikeId);
     }
   }
@@ -67,26 +67,25 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
         }}
       >
         <h2>Search</h2>
-        <SearchInputMain onSearch={this.handleSearchSubmit} />
+        <SearchInputMain
+          onSearch={this.handleSearchSubmit}
+          defaultSearchString={this.state.searchSerial}
+        />
 
-        {this.state.requestStatus === RequestStatus.Started && (
-          <div>Searching...</div>
+        {this.state.requestStatus === RequestStatus.Started && <div>Searching...</div>}
+
+        {this.state.requestStatus === RequestStatus.Success && !this.state.bikes.length && (
+          <div>No bikes found for the serial {this.state.searchSerial}</div>
         )}
 
-        {this.state.requestStatus === RequestStatus.Success &&
-          !this.state.bikes.length && (
-            <div>No bikes found for the serial {this.state.searchSerial}</div>
-          )}
-
-        {this.state.requestStatus === RequestStatus.Success &&
-          this.state.bikes.length > 0 && (
-            <div>
-              <h3>Bikes found with the serial {this.state.searchSerial}</h3>
-              {this.state.bikes.map(bike => (
-                <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
-              ))}
-            </div>
-          )}
+        {this.state.requestStatus === RequestStatus.Success && this.state.bikes.length > 0 && (
+          <div>
+            <h3>Bikes found with the serial {this.state.searchSerial}</h3>
+            {this.state.bikes.map((bike) => (
+              <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
+            ))}
+          </div>
+        )}
 
         {this.state.requestStatus === RequestStatus.Error && (
           <div>An error occurred while searching.</div>

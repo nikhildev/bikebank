@@ -3,6 +3,7 @@ import * as React from 'react';
 import './searchInputMain.scss';
 
 interface IProps {
+  defaultSearchString?: string;
   onSearch: (searchString: string) => void;
 }
 
@@ -15,9 +16,7 @@ class SearchInputMain extends React.Component<IProps, IState> {
     searchString: '',
   };
 
-  public handleSearchTextChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  public handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       searchString: event.currentTarget.value.toString(),
     });
@@ -29,6 +28,7 @@ class SearchInputMain extends React.Component<IProps, IState> {
         <input
           id="search-input-main"
           type="text"
+          value={this.props.defaultSearchString || this.state.searchString}
           onChange={this.handleSearchTextChange}
         />
         <button type="submit">Search</button>
@@ -37,9 +37,7 @@ class SearchInputMain extends React.Component<IProps, IState> {
   }
 
   private handleSubmit = (
-    event:
-      | React.MouseEvent<HTMLButtonElement>
-      | React.FormEvent<HTMLFormElement>,
+    event: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>,
   ): void => {
     event.preventDefault();
     this.props.onSearch(this.state.searchString);
