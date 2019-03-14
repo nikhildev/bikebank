@@ -25,9 +25,9 @@ export enum BikeStatus {
 
 export const BIKE_STATUS_LABELS = {
   0: 'Unregistered',
-  1: "In owner's possession",
-  2: 'REPORTED STOLEN',
-  3: 'REPORTED SOLD',
+  1: 'In Possession',
+  2: 'Stolen',
+  3: 'Sold',
 };
 
 export interface BikeDispatchProps {

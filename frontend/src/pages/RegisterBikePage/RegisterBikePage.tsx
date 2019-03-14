@@ -1,8 +1,16 @@
 import { FormikProps, Formik, FormikActions } from 'formik';
 import * as React from 'react';
-import { Paper, TextField } from '@material-ui/core';
+import {
+  Paper,
+  TextField,
+  FormControl,
+  InputLabel,
+  NativeSelect,
+  OutlinedInput,
+  Button,
+} from '@material-ui/core';
 
-import { Bike, BikeStatus, BIKE_VALIDATION_SCHEMA } from '../../types/bike';
+import { Bike, BikeStatus, BIKE_VALIDATION_SCHEMA, BIKE_STATUS_LABELS } from '../../types/bike';
 
 interface IState {
   form: Bike;
@@ -33,9 +41,8 @@ class RegisterBikePage extends React.Component<{}, IState> {
   };
 
   private createFormikForm = (props: FormikProps<Bike>) => {
-    console.log(props);
     return (
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={props.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
         <TextField
           id="serial"
           name="serial"
@@ -59,6 +66,8 @@ class RegisterBikePage extends React.Component<{}, IState> {
         <TextField
           id="purchaseDate"
           type="date"
+          variant="outlined"
+          margin="normal"
           error={props.touched.purchaseDate && props.errors.purchaseDate ? true : false}
           label={props.errors.purchaseDate || 'Purchase date'}
           onChange={props.handleChange}
@@ -66,7 +75,28 @@ class RegisterBikePage extends React.Component<{}, IState> {
             shrink: true,
           }}
         />
-        <button role="submit">Submit</button>
+        <FormControl variant="outlined" margin="normal">
+          <InputLabel shrink={true} htmlFor="age-native-label-placeholder">
+            Status
+          </InputLabel>
+          <NativeSelect
+            value={props.status}
+            variant="outlined"
+            onChange={props.handleChange}
+            input={
+              <OutlinedInput labelWidth={50} name="status" id="age-native-label-placeholder" />
+            }
+          >
+            {Object.entries(BIKE_STATUS_LABELS).map((status) => (
+              <option key={status[0]} value={status[0]}>
+                {status[1]}
+              </option>
+            ))}
+          </NativeSelect>
+        </FormControl>
+        <Button variant="contained" role="submit" type="submit">
+          Submit
+        </Button>
       </form>
     );
   };
@@ -89,9 +119,10 @@ class RegisterBikePage extends React.Component<{}, IState> {
           display: 'flex',
           flexDirection: 'column',
           padding: 16,
+          alignItems: 'center',
         }}
       >
-        <Paper style={{ padding: 16 }}>
+        <Paper style={{ padding: 16, width: 400 }}>
           <h3>Register a new bike</h3>
           {this.getRegisterForm()}
         </Paper>
