@@ -7,15 +7,15 @@ import { ConnectedRouterProps } from 'connected-react-router';
 import { RequestStatus } from 'src/types/http';
 import { searchBikeByBin } from 'src/api/bikes';
 
-interface IState {
+interface State {
   requestStatus: RequestStatus;
   searchSerial: string;
   bikes: Bike[];
   error: any;
 }
 
-class SearchPage extends React.Component<ConnectedRouterProps, IState> {
-  readonly state: IState = {
+class SearchPage extends React.Component<ConnectedRouterProps, State> {
+  readonly state: State = {
     requestStatus: RequestStatus.Initial,
     searchSerial: '',
     bikes: [],
@@ -23,11 +23,19 @@ class SearchPage extends React.Component<ConnectedRouterProps, IState> {
   };
 
   async componentDidMount() {
-    if (this.props['match'].params.bikeId && this.props['match'].params.bikeId.length) {
+    const bikeId = this.props['match'].params.bikeId;
+    if (bikeId && bikeId.length) {
       this.setState({
         searchSerial: this.props['match'].params.bikeId,
       });
-      await this.handleSearchSubmit(this.props['match'].params.bikeId);
+      await this.handleSearchSubmit(bikeId);
+    }
+  }
+
+  async componentWillReceiveProps(props: ConnectedRouterProps) {
+    const bikeId = props['match'].params.bikeId;
+    if (bikeId && bikeId.length && bikeId !== this.state.searchSerial) {
+      await this.handleSearchSubmit(bikeId);
     }
   }
 
