@@ -24,24 +24,24 @@
 }
 
 #ToolbarSearchBox {
-  padding: 8px;
+  padding: 8px 16px;
   border: 0;
   border-radius: 16px 0px 0px 16px;
-  color: #0288d1;
-  font-weight: 500;
   background-color: #bbdefb;
-  transition: background-color 0.3s, color 0.3s;
+  width: 36px;
+  transition: width 0.3s;
+  font-weight: 600;
 }
 
 #ToolbarSearchBox:focus {
   outline: none;
-  color: white;
-  background-color: #0277bd;
-  transition: background-color 0.3s, color 0.3s;
+  color: #777;
+  width: 80px;
+  transition: width 0.3s;
 }
 
 #ToolbarSearchButton {
-  background-color: #1565c0;
+  background-color: #2196f3;
   border: 0;
   padding: 8px;
   border-radius: 0px 16px 16px 0;
