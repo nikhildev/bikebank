@@ -25,18 +25,18 @@
 
 #ToolbarSearchBox {
   padding: 8px 16px;
+  color: #333;
   border: 0;
   border-radius: 16px 0px 0px 16px;
   background-color: #bbdefb;
-  width: 36px;
+  width: 48px;
   transition: width 0.3s;
   font-weight: 600;
 }
 
 #ToolbarSearchBox:focus {
   outline: none;
-  color: #777;
-  width: 80px;
+  width: 96px;
   transition: width 0.3s;
 }
 
