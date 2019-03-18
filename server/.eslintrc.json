@@ -1,36 +1,22 @@
 {
-    "env": {
-        "es6": true,
-        "node": true
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": ["airnbnb/base", "prettier/prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "prettier/prettier": "error",
-        "indent": [
-            "error",
-            2
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    }
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "rules": {
+    "prettier/prettier": "error",
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "windows"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
+  }
 }

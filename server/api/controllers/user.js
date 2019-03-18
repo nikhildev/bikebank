@@ -1,14 +1,11 @@
-const uuid = require('uuid');
-const db = require('../helpers/firebase').firebaseDB;
 const Users = require('../helpers/firebase').Users;
-const firebaseDB = require('../helpers/firebase').firebaseDB;
 
 module.exports = {
   ping,
 };
 
 async function ping(req, res) {
-  let error = null;
+  // let error = null;
   const userRef = Users.doc(req.user.uid);
 
   try {
