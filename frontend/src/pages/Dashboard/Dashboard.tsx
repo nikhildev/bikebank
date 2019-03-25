@@ -22,9 +22,7 @@ interface MappedDispatchProps {
   requestBikesForUser: Function;
 }
 
-class DashboardPage extends React.Component<
-  MappedStateProps & MappedDispatchProps & IState
-> {
+class DashboardPage extends React.Component<MappedStateProps & MappedDispatchProps & IState> {
   componentDidMount() {
     if (!this.props.bikes.lastUpdated) {
       this.props.requestBikesForUser();
@@ -56,18 +54,13 @@ class DashboardPage extends React.Component<
 
             {this.props.bikes && (
               <div>
-                {this.props.bikes.items.map(bike => {
-                  return (
-                    <SearchResultCard key={bike.id} id={bike.id} bike={bike} />
-                  );
+                {this.props.bikes.items.map((bike) => {
+                  return <SearchResultCard key={bike.id} id={bike.id} bike={bike} />;
                 })}
               </div>
             )}
             {this.props.bikes.hasError && (
-              <div>
-                Error fetching your bike information. Press refresh to try
-                again.
-              </div>
+              <div>Error fetching your bike information. Press refresh to try again.</div>
             )}
           </React.Fragment>
         )}

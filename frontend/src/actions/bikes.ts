@@ -39,7 +39,6 @@ export function requestBikesForUser(refresh?: boolean) {
         const bikes = await getBikesForUser();
         dispatch(receivedBikes(bikes));
       } catch (error) {
-        console.error(error);
         dispatch(errorReceivingBikes());
       }
     }

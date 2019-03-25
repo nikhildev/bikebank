@@ -31,6 +31,7 @@ export async function getBikesForUser(): Promise<Bike[]> {
     return bikeData.data as Bike[];
   } catch (error) {
     console.error(error);
+    return Promise.reject();
   }
   return [] as Bike[];
 }

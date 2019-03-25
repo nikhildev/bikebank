@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import { FaSearch } from 'react-icons/fa';
 
 import './AppToolbar.css';
@@ -60,11 +60,11 @@ class AppToolbar extends React.Component<MappedDispatchProps & MappedStateProps 
         <div>
           {this.props.user.user && (
             <div onClick={this.handleLogoutClick}>
-              <Avatar
+              {/* <Avatar
                 id="ToolbarAvatar"
                 alt="User Name"
                 src={this.props.user.user.photoURL || ''}
-              />
+              /> */}
             </div>
           )}
         </div>
