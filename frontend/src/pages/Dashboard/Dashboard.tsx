@@ -57,6 +57,9 @@ class DashboardPage extends React.Component<MappedStateProps & MappedDispatchPro
                 {this.props.bikes.items.map((bike) => {
                   return <SearchResultCard key={bike.id} id={bike.id} bike={bike} />;
                 })}
+                {!this.props.bikes.isFetching && !this.props.bikes.items.length && (
+                  <div>You have not registered any bikes</div>
+                )}
               </div>
             )}
             {this.props.bikes.hasError && (
