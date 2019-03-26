@@ -124,7 +124,7 @@ class RegisterBikePage extends React.Component<{}, IState> {
           value={props.values.accessories}
           onChange={props.handleChange}
         />
-        <Button variant="contained" role="submit" type="submit">
+        <Button variant="contained" role="submit" type="submit" color="primary">
           Submit
         </Button>
       </form>
