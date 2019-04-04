@@ -16,6 +16,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        margin: EdgeInsets.fromLTRB(16, 64, 16, 16),
         child: Column(
           children: <Widget>[
             TextField(
@@ -27,6 +28,7 @@ class _SearchState extends State<Search> {
               controller: searchTextController,
             ),
             RaisedButton(
+              color: Colors.blueAccent,
               child: Text('Search'),
               onPressed: () {
                 _handleSearch();
