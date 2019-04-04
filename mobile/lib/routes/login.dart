@@ -19,7 +19,10 @@ class _LoginState extends State<Login> {
           children: <Widget>[
             RaisedButton(
               onPressed: this._handleGoogleLoginClick,
-              child: Text('Google'),
+              child: Text('Login with Google', style: TextStyle(
+                color: Colors.white,
+              ),),
+              color: Colors.blue,
             )
           ],
         ),
