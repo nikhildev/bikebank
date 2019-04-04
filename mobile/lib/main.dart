@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// import 'routes/search.dart';
 import 'routes/login.dart';
 
 void main() => runApp(MyApp());
