@@ -21,13 +21,12 @@ try {
     credential: firebaseAdmin.credential.cert(serviceAccount),
   });
 } catch (error) {
-  console.log('Error', error);
-  console.log('serviceAccount', serviceAccount);
   switch (error.code) {
     case 'MODULE_NOT_FOUND':
       throw new Error('### FIREBASE CONFIG FILE NOT FOUND ###');
       break;
     default:
+      console.error(error);
       throw new Error('### An unknown error has occurred with initialization ###');
   }
 }
