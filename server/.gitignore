@@ -1,3 +1,4 @@
 /node_modules
 .DS_Store
 /config/firebase-service-config.json
+.env
