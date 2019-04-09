@@ -15,10 +15,13 @@
     "firebase-admin": "^6.5.1"
   },
   "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "should": "^13.2.3",
     "supertest": "3.3.0",
-    "swagger-tools": "^0.10.4",
-    "eslint": "5.16.0"
+    "swagger-tools": "^0.10.4"
   },
   "scripts": {
     "start": "swagger project start",

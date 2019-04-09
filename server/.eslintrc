@@ -3,7 +3,8 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airnbnb/base", "prettier/prettier"],
+  "extends": ["airnbnb", "prettier"],
+  "plugins": ["prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -11,7 +12,6 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [],
   "rules": {
     "prettier/prettier": "error",
     "indent": ["error", 2],
