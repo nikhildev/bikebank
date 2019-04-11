@@ -1,6 +1,6 @@
 import { AxiosResponse, AxiosError } from 'axios';
-import { getAxiosInstance } from 'src/lib/axios';
-import { Bike } from 'src/types/bike';
+import { getAxiosInstance } from '../lib/axios';
+import { Bike } from '../types/bike';
 
 export async function searchBikeByBin(bikeBin: string): Promise<any> {
   if (bikeBin.length) {

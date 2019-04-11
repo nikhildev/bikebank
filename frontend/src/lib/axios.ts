@@ -9,11 +9,11 @@ export enum AxiosErrors {
 export const getAxiosInstance = () => {
   const axiosInstance = axios.default.create();
   axiosInstance.interceptors.request.use(
-    async options => {
+    async (options) => {
       options.headers['X-ID-Token'] = await getIdToken();
       return options;
     },
-    error => {
+    (error) => {
       console.error(error);
     },
   );

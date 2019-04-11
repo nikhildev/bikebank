@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { auth } from 'firebase';
-import { store } from 'src';
-import { receivedUserProfile } from 'src/actions/user';
+import { store } from '../index';
+import { receivedUserProfile } from '../actions/user';
 
 const config = {
   apiKey: 'AIzaSyDGTLJdiH42-pd3pRXJozbvy9dxvZd9m1Y',

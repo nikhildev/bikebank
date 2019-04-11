@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { UserDispatchProps } from '../types/user';
 import * as signinImage from '../assets/images/signin_with_google.png';
-import { requestUserLogin, AuthProvider } from 'src/actions/user';
+import { requestUserLogin, AuthProvider } from '../actions/user';
 
 interface MappedDispatchProps {
   requestUserLogin: Function;
@@ -13,9 +13,7 @@ interface MappedStateProps {
   user: UserDispatchProps;
 }
 
-class Protected extends React.Component<
-  MappedStateProps & MappedDispatchProps
-> {
+class Protected extends React.Component<MappedStateProps & MappedDispatchProps> {
   handleGoogleLoginClick = () => {
     this.props.requestUserLogin(AuthProvider.Google);
   };
@@ -37,12 +35,7 @@ class Protected extends React.Component<
           }}
         >
           <h1>Please login to access your dashboard</h1>
-          <img
-            src={signinImage}
-            alt=""
-            height="52"
-            onClick={this.handleGoogleLoginClick}
-          />
+          <img src={signinImage} alt="" height="52" onClick={this.handleGoogleLoginClick} />
           <img
             src="https://i.stack.imgur.com/Vk9SO.png"
             alt="Login with Facebook"

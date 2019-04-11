@@ -1,7 +1,7 @@
 import { ReduxActionTypes } from '../types/redux';
 import { Dispatch } from 'redux';
-import { Bike } from 'src/types/bike';
-import { getBikesForUser } from 'src/api/bikes';
+import { Bike } from '../types/bike';
+import { getBikesForUser } from '../api/bikes';
 
 export function loadingBikes() {
   return {

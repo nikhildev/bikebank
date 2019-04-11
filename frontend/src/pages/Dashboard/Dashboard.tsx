@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { requestBikesForUser } from '../../actions/bikes';
-import { BikeDispatchProps } from 'src/types/bike';
+import { BikeDispatchProps } from '../../types/bike';
 import SearchResultCard from '../../components/SearchResult/Card';
-import { UserDispatchProps } from 'src/types/user';
+import { UserDispatchProps } from '../../types/user';
 
 // These Will be received through redux store
 interface IState {

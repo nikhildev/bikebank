@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 
 import './AppToolbar.css';
 import { UserDispatchProps } from '../../types/user';
-import { requestUserLogin, requestUserLogout } from 'src/actions/user';
+import { requestUserLogin, requestUserLogout } from '../../actions/user';
 import { history } from '../../store';
 import { Link } from 'react-router-dom';
 

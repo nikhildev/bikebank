@@ -4,8 +4,8 @@ import SearchInputMain from '../../components/SearchInput/SearchInputMain';
 import SearchResultCard from '../../components/SearchResult/Card';
 import { Bike } from '../../types/bike';
 import { ConnectedRouterProps } from 'connected-react-router';
-import { RequestStatus } from 'src/types/http';
-import { searchBikeByBin } from 'src/api/bikes';
+import { RequestStatus } from '../../types/http';
+import { searchBikeByBin } from '../../api/bikes';
 
 interface State {
   requestStatus: RequestStatus;

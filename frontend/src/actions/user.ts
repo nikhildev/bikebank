@@ -6,8 +6,8 @@ import {
   googleAuthProvider,
   facebookAuthProvider,
   twitterAuthProvider,
-} from 'src/lib/firebase';
-import { ping } from 'src/api/user';
+} from '../lib/firebase';
+import { ping } from '../api/user';
 
 export enum AuthProvider {
   Google,
