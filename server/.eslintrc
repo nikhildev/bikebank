@@ -3,7 +3,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airnbnb", "prettier"],
+  "extends": "airnbnb",
   "plugins": ["prettier"],
   "parserOptions": {
     "ecmaFeatures": {
