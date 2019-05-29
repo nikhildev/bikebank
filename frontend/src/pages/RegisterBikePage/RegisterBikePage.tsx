@@ -1,16 +1,7 @@
 import { FormikProps, Formik, FormikActions } from 'formik';
 import * as React from 'react';
-import {
-  Paper,
-  TextField,
-  FormControl,
-  InputLabel,
-  NativeSelect,
-  OutlinedInput,
-  Button,
-} from '@material-ui/core';
 
-import { Bike, BikeStatus, BIKE_VALIDATION_SCHEMA, BIKE_STATUS_LABELS } from '../../types/bike';
+import { Bike, BikeStatus, BIKE_VALIDATION_SCHEMA } from '../../types/bike';
 
 interface IState {
   form: Bike;
@@ -43,7 +34,7 @@ class RegisterBikePage extends React.Component<{}, IState> {
   private createFormikForm = (props: FormikProps<Bike>) => {
     return (
       <form onSubmit={props.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-        <TextField
+        {/* <TextField
           id="serial"
           name="serial"
           error={props.touched.serial && props.errors.serial ? true : false}
@@ -126,7 +117,7 @@ class RegisterBikePage extends React.Component<{}, IState> {
         />
         <Button variant="contained" role="submit" type="submit" color="primary">
           Submit
-        </Button>
+        </Button> */}
       </form>
     );
   };
@@ -152,10 +143,10 @@ class RegisterBikePage extends React.Component<{}, IState> {
           alignItems: 'center',
         }}
       >
-        <Paper style={{ padding: 16, width: 400 }}>
+        <div style={{ padding: 16, width: 400 }}>
           <h3>Register a new bike</h3>
           {this.getRegisterForm()}
-        </Paper>
+        </div>
       </main>
     );
   }

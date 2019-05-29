@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "3.9.3",
     "axios": "0.18.0",
+    "bootstrap": "^4.3.1",
     "connected-react-router": "6.2.2",
     "firebase": "5.8.6",
     "formik": "1.5.1",
     "history": "4.9.0",
     "react": "16.8.5",
     "react-dom": "16.8.5",
-    "react-icons": "3.5.0",
+    "react-icons": "^3.5.0",
     "react-redux": "6.0.1",
     "react-router-dom": "5.0.0",
     "redux": "4.0.1",
@@ -29,7 +29,6 @@
     "prettier:format": "prettier --check --write \"src/**/*.ts\""
   },
   "devDependencies": {
-    "react-scripts-ts": "3.1.0",
     "@types/axios": "0.14.0",
     "@types/enzyme": "3.9.1",
     "@types/enzyme-adapter-react-16": "1.0.5",
@@ -53,7 +52,9 @@
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-react": "7.12.4",
     "prettier": "1.16.4",
+    "react-scripts-ts": "3.1.0",
     "react-test-renderer": "16.8.6",
+    "tslib": "^1.9.3",
     "tslint": "5.15.0",
     "tslint-config-standard": "8.0.1",
     "typescript": "3.4.2"
