@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { UserDispatchProps } from '../types/user';
-import * as signinImage from '../assets/images/signin_with_google.png';
 import { requestUserLogin, AuthProvider } from '../actions/user';
 
 interface MappedDispatchProps {
@@ -29,18 +28,21 @@ class Protected extends React.Component<MappedStateProps & MappedDispatchProps> 
       return <main>{this.props.children}</main>;
     } else {
       return (
-        <main
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          <h1>Please login to access your dashboard</h1>
-          <img src={signinImage} alt="" height="52" onClick={this.handleGoogleLoginClick} />
-          <img
-            src="https://i.stack.imgur.com/Vk9SO.png"
-            alt="Login with Facebook"
-            onClick={this.handleFacebookLoginClick}
-          />
+        <main className="container-fluid h-100">
+          <div className="card p-3 m-3 align-middle">
+            <h3>Please login to access your dashboard</h3>
+            <div className="row">
+              <button className="col-md my-2 btn btn-primary" onClick={this.handleGoogleLoginClick}>
+                Sign in with Google
+              </button>
+              <button
+                className="col-md my-2 btn btn-primary"
+                onClick={this.handleFacebookLoginClick}
+              >
+                Log in with Facebook
+              </button>
+            </div>
+          </div>
         </main>
       );
     }
