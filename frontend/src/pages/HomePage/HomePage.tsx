@@ -16,8 +16,6 @@ const HomePage: React.FC = () => {
           My Dashboard
         </Link>
       </div>
-      <h1>Home Page</h1>
-      <Link to="/dashboard">My Dashboard</Link>
     </main>
   );
 };

@@ -3,47 +3,32 @@ import { connect } from 'react-redux';
 
 import { UserDispatchProps } from '../types/user';
 import { requestUserLogin, AuthProvider } from '../actions/user';
+import { Redirect } from 'react-router';
+
+interface FType {
+  (provider: AuthProvider, path?: string): void;
+}
 
 interface MappedDispatchProps {
-  requestUserLogin: Function;
+  requestUserLogin: FType;
 }
 
 interface MappedStateProps {
   user: UserDispatchProps;
 }
 
-class Protected extends React.Component<MappedStateProps & MappedDispatchProps> {
-  handleGoogleLoginClick = () => {
-    this.props.requestUserLogin(AuthProvider.Google);
-  };
+interface OwnProps {
+  currentLocation?: string;
+}
 
-  handleFacebookLoginClick = () => {
-    this.props.requestUserLogin(AuthProvider.Facebook);
-  };
-
+class Protected extends React.Component<OwnProps & MappedStateProps & MappedDispatchProps> {
   public render() {
-    if (this.props.user.isFetching) {
-      return <main>Signing you into your account</main>;
-    } else if (this.props.user.user) {
+    console.log('this. :', this.props.currentLocation);
+    if (this.props.user.user) {
       return <main>{this.props.children}</main>;
     } else {
       return (
-        <main className="container-fluid h-100">
-          <div className="card p-3 m-3 align-middle">
-            <h3>Please login to access your dashboard</h3>
-            <div className="row">
-              <button className="col-md my-2 btn btn-primary" onClick={this.handleGoogleLoginClick}>
-                Sign in with Google
-              </button>
-              <button
-                className="col-md my-2 btn btn-primary"
-                onClick={this.handleFacebookLoginClick}
-              >
-                Log in with Facebook
-              </button>
-            </div>
-          </div>
-        </main>
+        <Redirect to={{ pathname: '/login', state: { referrer: this.props.currentLocation } }} />
       );
     }
   }

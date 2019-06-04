@@ -8,6 +8,7 @@ import {
   twitterAuthProvider,
 } from '../lib/firebase';
 import { ping } from '../api/user';
+import { history } from '../store';
 
 export enum AuthProvider {
   Google,
@@ -40,7 +41,7 @@ export function logoutUser() {
   };
 }
 
-export function requestUserLogin(provider: AuthProvider) {
+export function requestUserLogin(provider: AuthProvider, redirectPath?: string) {
   return async (dispatch: Dispatch, getState: any) => {
     dispatch(loadingUserProfile());
 
@@ -71,6 +72,7 @@ export function requestUserLogin(provider: AuthProvider) {
         const signinMethods = await auth(firebaseApp).fetchSignInMethodsForEmail(currentUser.email);
         console.info('signinMethods', signinMethods);
         dispatch(receivedUserProfile(currentUser));
+        redirectPath && history.push(redirectPath);
       }
     } catch (error) {
       // User has already use the same email for google sing in. We will try to link the accounts

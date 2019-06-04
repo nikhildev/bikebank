@@ -43,9 +43,9 @@ class AppToolbar extends React.Component<MappedDispatchProps & MappedStateProps 
             Logout
           </button>
         ) : (
-          <button className="btn btn-dark" onClick={this.handleLogoutClick}>
+          <Link to="/" className="btn btn-dark">
             Login
-          </button>
+          </Link>
         )}
       </nav>
     );
