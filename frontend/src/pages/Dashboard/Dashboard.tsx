@@ -35,20 +35,18 @@ class DashboardPage extends React.Component<MappedStateProps & MappedDispatchPro
 
   public render() {
     return (
-      <main
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 16,
-        }}
-      >
+      <main className="container-fluid h-100">
         {this.props.user && this.props.user.user && (
           <React.Fragment>
-            <h1>Dashboard - {this.props.user.user.displayName}</h1>
+            <h1 className="my-3">Dashboard - {this.props.user.user.displayName}</h1>
 
-            <Link to="dashboard/register">Register a new bike</Link>
+            <Link className="btn btn-primary" to="dashboard/register">
+              Register a new bike
+            </Link>
 
-            <button onClick={this.refreshUserBikes}>Refresh</button>
+            <button className="btn btn-accent" onClick={this.refreshUserBikes}>
+              Refresh
+            </button>
 
             {this.props.bikes.isFetching && <h3>Loading your bikes...</h3>}
 

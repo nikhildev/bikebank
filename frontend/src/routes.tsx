@@ -6,12 +6,10 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import DashboardPage from './pages/Dashboard/Dashboard';
 import Protected from './components/Protected';
 import HomePage from './pages/HomePage/HomePage';
-import LoginPage from './pages/LoginPage/LoginPage';
 
 const AppRoutes: React.FunctionComponent = () => (
   <Switch>
     <Route path="/" exact={true} component={HomePage} />
-    <Route path="/login" component={LoginPage} />
     <Route path="/search/:bikeId" component={SearchPage} />
     <Route path="/search" component={SearchPage} />
     <Route exact={true} path="/dashboard/register">

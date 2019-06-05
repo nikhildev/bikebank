@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { UserDispatchProps } from '../types/user';
 import { requestUserLogin, AuthProvider } from '../actions/user';
-import { Redirect } from 'react-router';
+import LoginPage from 'src/pages/LoginPage/LoginPage';
 
 interface FType {
   (provider: AuthProvider, path?: string): void;
@@ -23,13 +23,11 @@ interface OwnProps {
 
 class Protected extends React.Component<OwnProps & MappedStateProps & MappedDispatchProps> {
   public render() {
-    console.log('this. :', this.props.currentLocation);
+    console.log(this.props.user.user);
     if (this.props.user.user) {
       return <main>{this.props.children}</main>;
     } else {
-      return (
-        <Redirect to={{ pathname: '/login', state: { referrer: this.props.currentLocation } }} />
-      );
+      return <LoginPage />;
     }
   }
 }
