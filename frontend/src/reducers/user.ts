@@ -2,7 +2,7 @@ import { IReduxAction, ReduxActionTypes } from '../types/redux';
 import { UserDispatchProps } from '../types/user';
 
 export const INITIAL_STATE: UserDispatchProps = {
-  isFetching: false,
+  isFetching: true,
   user: null,
   hasError: false,
 };
