@@ -20,8 +20,8 @@
     "swagger-tools": "^0.10.4"
   },
   "scripts": {
-    "start": "swagger project start",
-    "dev": "swagger project start",
+    "start": "npx swagger project start",
+    "dev": "npx swagger project start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier:format": "prettier --check --write \"api/**/*.js\""
   },
