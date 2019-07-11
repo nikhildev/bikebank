@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.fontFamily": "Fira Code Retina, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "workbench.colorTheme": "Material Theme High Contrast",
+    "workbench.iconTheme": "material-icon-theme"
+  }
+}
