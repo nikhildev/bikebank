@@ -54,10 +54,10 @@
     "prettier": "1.16.4",
     "react-scripts-ts": "3.1.0",
     "react-test-renderer": "16.8.6",
-    "tslib": "1.9.3",
-    "tslint": "5.15.0",
+    "tslib": "1.10.0",
+    "tslint": "5.18.0",
     "tslint-config-standard": "8.0.1",
-    "typescript": "3.4.2"
+    "typescript": "3.5.3"
   },
   "proxy": "http://localhost:10010"
 }
